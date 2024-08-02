@@ -1,54 +1,248 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import * as l from "../style/styledmain2";
 
 const Main2 = () => {
   const navigate = useNavigate();
 
-  const goMain = () => {
-    navigate(`/`);
+  const [box2Items, setBox2Items] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [list2Items, setList2Items] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const axiosInstance = axios.create({
+    baseURL: "http://127.0.0.1:8000/",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+      "X-CSRFToken": localStorage.getItem("csrftoken") || "",
+    },
+  });
+
+  useEffect(() => {
+    const checkCartStatus = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get("customFit/cart/");
+        console.log("현재 카트 상태:", response.data);
+        if (response.data.length === 0) {
+          console.log("카트가 비어 있습니다.");
+        } else {
+          console.log("카트에 상품이 있습니다.");
+        }
+      } catch (error) {
+        console.error("빈 상태 확인 중 오류 발생:", error.message);
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkCartStatus();
+  }, []);
+
+  const toggleCheckbox = async (item) => {
+    const isSelected = selectedItems.some(
+      (selectedItem) => selectedItem.product_id === item.product_id
+    );
+
+    if (isSelected) {
+      setSelectedItems((prevSelectedItems) =>
+        prevSelectedItems.filter((i) => i.product_id !== item.product_id)
+      );
+
+      try {
+        await removeFromCart(item.product_id);
+        console.log(`상품 ID ${item.product_id}이(가) 카트에서 삭제되었습니다.`);
+      } catch (error) {
+        console.error("카트에서 삭제 중 오류 발생:", error.message);
+        setError(error);
+      }
+    } else {
+      setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
+
+      try {
+        await addToCart(item.product_id);
+        console.log(`상품 ID ${item.product_id}이(가) 카트에 추가되었습니다.`);
+      } catch (error) {
+        console.error("카트 추가 중 오류 발생:", error.message);
+        setError(error);
+      }
+    }
   };
 
-  const [isChecked, setIsChecked] = useState(false);
-
-  const toggleCheckbox = () => {
-    setIsChecked(!isChecked);
+  const handleSearch = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get("customFit/search/", {
+        params: { product_name: searchQuery },
+      });
+      setList2Items(response.data);
+    } catch (error) {
+      console.error("검색 중 오류 발생:", error.message);
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // List2의 아이템 상태 관리
-  const [list2Items] = useState([
-    { id: 1, name: "상품명1", manufacturer: "제조사A", size: "Ng" },
-    { id: 2, name: "상품명2", manufacturer: "제조사A", size: "Ng" },
-    { id: 3, name: "상품명3", manufacturer: "제조사A", size: "Ng" },
-    { id: 4, name: "상품명4", manufacturer: "제조사A", size: "Ng" },
-    { id: 5, name: "상품명5", manufacturer: "제조사A", size: "Ng" },
-    { id: 6, name: "상품명6", manufacturer: "제조사A", size: "Ng" },
-    { id: 7, name: "상품명7", manufacturer: "제조사A", size: "Ng" },
-    { id: 8, name: "상품명8", manufacturer: "제조사A", size: "Ng" },
-    { id: 9, name: "상품명9", manufacturer: "제조사A", size: "Ng" },
-    { id: 10, name: "상품명10", manufacturer: "제조사A", size: "Ng" },
-    { id: 11, name: "상품명11", manufacturer: "제조사A", size: "Ng" }
-  ]);
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
-  // Box2의 아이템 상태 관리
-  const [box2Items, setBox2Items] = useState([
-    { id: 1, name: "과자 1" },
-    { id: 2, name: "과자 2" },
-    { id: 3, name: "과자 3" },
-    { id: 4, name: "과자 4" },
-    { id: 5, name: "과자 5" }
-    //{ id: 6, name: "과자 6" }//
-  ]);
+  const addToCart = async (product_id) => {
+    try {
+      const response = await axiosInstance.post(
+        `customFit/add_cart/${product_id}/`,
+        {},
+        {
+          headers: {
+            "X-CSRFToken": localStorage.getItem("csrftoken") || "",
+          },
+        }
+      );
+      console.log("API 응답:", response.data);
+      console.log(`상품 ID ${product_id}이(가) 카트에 추가되었습니다.`);
+    } catch (error) {
+      console.error("카트 추가 중 오류 발생:", error.message);
+      setError(error);
+    }
+  };
 
-  // Box2의 개별 아이템 삭제 함수
+  const removeFromCart = async (product_id) => {
+    try {
+      const response = await axiosInstance.delete(
+        `customFit/cart/delete_item/${product_id}/`,
+        {
+          headers: {
+            "X-CSRFToken": localStorage.getItem("csrftoken") || "",
+          },
+        }
+      );
+      console.log("API 응답:", response.data);
+      console.log(`상품 ID ${product_id}이(가) 카트에서 제거되었습니다.`);
+    } catch (error) {
+      console.error("카트에서 제거 중 오류 발생:", error.message);
+      setError(error);
+    }
+  };
+
+  const addToBox2Items = async () => {
+    if (selectedItems.length === 0) {
+      console.log("선택된 상품이 없습니다.");
+      return;
+    }
+
+    const newItems = selectedItems.map((item) => ({
+      product_id: item.product_id,
+      product_name: item.product_name,
+    }));
+
+    const uniqueItems = newItems.filter(
+      (newItem) => !box2Items.some((boxItem) => boxItem.product_id === newItem.product_id)
+    );
+
+    try {
+      for (const item of uniqueItems) {
+        await addToCart(item.product_id);
+      }
+      setBox2Items((prevItems) => [...prevItems, ...uniqueItems]);
+      console.log("Box2에 추가된 상품:", uniqueItems);
+    } catch (error) {
+      console.error("상품 추가 중 오류 발생:", error.message);
+      setError(error);
+    } finally {
+      setSelectedItems([]);
+    }
+  };
+
   const deleteItemFromBox2 = (id) => {
-    setBox2Items(box2Items.filter(item => item.id !== id));
+    setBox2Items((prevItems) => prevItems.filter((item) => item.product_id !== id));
   };
 
-  // Box2의 모든 아이템 삭제 함수
-  const clearBox2Items = () => {
-    setBox2Items([]);
+  const clearBox2Items = async () => {
+    try {
+      const itemIds = box2Items.map((item) => item.product_id);
+      if (itemIds.length > 0) {
+        await axiosInstance.post("customFit/cart/clear/", {
+          item_ids: itemIds,
+        }, {
+          headers: {
+            "X-CSRFToken": localStorage.getItem("csrftoken") || "",
+          },
+        });
+      }
+      setBox2Items([]);
+      console.log("Box2의 모든 상품이 카트에서 제거되었습니다.");
+    } catch (error) {
+      console.error("Box2 항목 삭제 중 오류 발생:", error.message);
+      setError(error);
+    }
   };
+
+  const deleteSelectedItem = async (id) => {
+    setSelectedItems((prevItems) =>
+      prevItems.filter((item) => item.product_id !== id)
+    );
+
+    try {
+      await removeFromCart(id);
+      console.log(`상품 ID ${id}이(가) 카트에서 삭제되었습니다.`);
+    } catch (error) {
+      console.error("선택된 항목 삭제 중 오류 발생:", error.message);
+      setError(error);
+    }
+  };
+
+  const clearSelectedItems = async () => {
+    try {
+      for (const item of selectedItems) {
+        await removeFromCart(item.product_id);
+      }
+      setSelectedItems([]);
+      console.log("선택된 모든 상품이 카트에서 제거되었습니다.");
+    } catch (error) {
+      console.error("선택된 항목 모두 삭제 중 오류 발생:", error.message);
+      setError(error);
+    }
+  };
+
+  const handleCompare = async () => {
+    setLoading(true);
+    try {
+      const cartResponse = await axiosInstance.get("customFit/cart/");
+      if (cartResponse.data.length === 0) {
+        setError(
+          new Error("카트에 상품이 없습니다. 상품을 추가한 후 비교해 주세요.")
+        );
+        return;
+      }
+
+      const response = await axiosInstance.get("customFit/compare/");
+      const recommendedProduct = response.data.recommended_product;
+
+      navigate("/main3", { state: { recommendedProduct } });
+
+      await clearBox2Items();
+      console.log("비교 후 카트가 비워졌습니다.");
+    } catch (error) {
+      console.error("비교하기 중 오류 발생:", error.message);
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <l.Container>
@@ -70,7 +264,7 @@ const Main2 = () => {
           src={`${process.env.PUBLIC_URL}/logo/ylogo.svg`}
           alt="logo"
           width="40px"
-          onClick={goMain}
+          onClick={() => navigate("/")}
         />
         <img
           id="alarm"
@@ -116,36 +310,50 @@ const Main2 = () => {
         <img
           id="ylogo"
           src={`${process.env.PUBLIC_URL}/logo/ylogo.svg`}
-          alt="logo"
+          alt="로고"
           width="30px"
         />
-        <input type="text" placeholder="검색어를 입력하세요." />
+        <input
+          type="text"
+          placeholder="검색어를 입력하세요."
+          value={searchQuery}
+          onChange={handleSearchInputChange}
+        />
         <img
           id="search"
           src={`${process.env.PUBLIC_URL}/logo/search.svg`}
-          alt="search button"
-          onClick={goMain}
+          alt="검색 버튼"
+          onClick={handleSearch}
         />
       </l.InputBlank>
 
       <l.List>
         <l.Keywordd>
-          <l.SmallBox2>상품명</l.SmallBox2>
+          <l.ProductName>상품명</l.ProductName>
           <l.SmallBox2>제조사</l.SmallBox2>
-          <l.SmallBox2>용량</l.SmallBox2>
-          <l.SmallBox2>선택하기</l.SmallBox2>
+          <l.SmallBox0>용량</l.SmallBox0>
+          <l.SmallBox0>선택하기</l.SmallBox0>
         </l.Keywordd>
 
         <l.List2>
           {list2Items.map((item) => (
-            <l.Keywordd key={item.id}>
-              <l.SmallBox3>{item.name}</l.SmallBox3>
+            <l.Keywordd key={item.product_id}>
+              <l.ProductName2>{item.product_name}</l.ProductName2>
               <l.SmallBox3>{item.manufacturer}</l.SmallBox3>
-              <l.SmallBox3>{item.size}</l.SmallBox3>
+              <l.SmallBox6>{item.Capacity}g</l.SmallBox6>
               <l.SmallBox4>
                 <l.Checkborder>
-                  <l.Check isChecked={isChecked} onClick={toggleCheckbox}>
-                    {isChecked && "\u2714"}
+                  <l.Check
+                    isChecked={selectedItems.some(
+                      (selectedItem) =>
+                        selectedItem.product_id === item.product_id
+                    )}
+                    onClick={() => toggleCheckbox(item)}
+                  >
+                    {selectedItems.some(
+                      (selectedItem) =>
+                        selectedItem.product_id === item.product_id
+                    ) && "\u2714"}
                   </l.Check>
                 </l.Checkborder>
               </l.SmallBox4>
@@ -157,38 +365,36 @@ const Main2 = () => {
       <l.Kit>맞춤 건강 키트</l.Kit>
 
       <l.Body>
-        <l.Box>
-          <l.Box2>
-            {box2Items.map((item) => (
-              <l.Keywordd key={item.id}>
-                <l.SmallBox5>
-                  <span>{item.name}</span>
-                  <l.DelButton>
-                    <img
-                      id="del"
-                      src={`${process.env.PUBLIC_URL}/logo/delbtn.svg`}
-                      alt="delbutton"
-                      width="21px"
-                      height="22"
-                      onClick={() => deleteItemFromBox2(item.id)}  // 개별 아이템 삭제
-                    />
-                  </l.DelButton>
-                </l.SmallBox5>
-              </l.Keywordd>
+        <l.SelectedItemsSection>
+          <l.SelectedItemsList>
+            {selectedItems.map((item) => (
+              <l.SelectedItem key={item.product_id}>
+                {item.product_name}
+                <l.DelButton>
+                  <img
+                    id="del"
+                    src={`${process.env.PUBLIC_URL}/logo/delbtn.svg`}
+                    alt="삭제 버튼"
+                    width="20px"
+                    height="20px"
+                    onClick={() => deleteSelectedItem(item.product_id)}
+                  />
+                </l.DelButton>
+              </l.SelectedItem>
             ))}
-          </l.Box2>
+          </l.SelectedItemsList>
           <l.Icon>
             <img
               id="trash"
               src={`${process.env.PUBLIC_URL}/logo/trash.svg`}
-              alt="trash"
+              alt="휴지통"
               width="21px"
               height="22"
-              onClick={clearBox2Items}  // Box2 아이템 전체 삭제
+              onClick={clearSelectedItems}
             />
           </l.Icon>
-        </l.Box>
-        <l.Button onClick={goMain}>
+        </l.SelectedItemsSection>
+        <l.Button onClick={handleCompare}>
           <l.ButtonText>비교하기</l.ButtonText>
         </l.Button>
       </l.Body>

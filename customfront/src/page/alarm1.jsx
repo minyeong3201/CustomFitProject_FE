@@ -14,6 +14,18 @@ const Alarm1 = () => {
     navigate(`/`);
   };
 
+  const goMypage = () => {
+    navigate(`/Mypage`);
+  };
+
+  const goMyreview = () => {
+    navigate(`/Review`);
+  };
+
+  const goLogin = () => {
+    navigate(`/Login`);
+  };
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -91,7 +103,7 @@ const Alarm1 = () => {
         <>
           <q.Backdrop onClick={closeMenu} />
           <q.DropdownMenu>
-            <q.DropdownItem onClick={() => navigate("/mypage")}>
+            <q.DropdownItem onClick={goMypage}>
               <img
                 id="mypage"
                 src={`${process.env.PUBLIC_URL}/logo/mypage.svg`}
@@ -105,7 +117,7 @@ const Alarm1 = () => {
                 onClick={toggleMenu}
               />
             </q.DropdownItem>
-            <q.DropdownItem onClick={() => navigate("/myreview")}>
+            <q.DropdownItem onClick={goMyreview}>
               <img
                 id="myreview"
                 src={`${process.env.PUBLIC_URL}/logo/myreview.svg`}
@@ -127,6 +139,19 @@ const Alarm1 = () => {
                 style={{
                   position: "absolute",
                   top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </q.DropdownItem>
+            <q.DropdownItem onClick={goLogin}>
+              <img
+                id="logout"
+                src={`${process.env.PUBLIC_URL}/logo/logout.svg`}
+                alt="logout"
+                style={{
+                  position: "absolute",
                   right: "8px",
                   cursor: "pointer",
                 }}

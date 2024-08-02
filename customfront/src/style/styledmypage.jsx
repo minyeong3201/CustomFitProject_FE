@@ -7,7 +7,6 @@ export const Container = styled.div`
   height: 924px;
   background: #fff;
 `;
-//1
 
 export const Header = styled.div`
   position: fixed;

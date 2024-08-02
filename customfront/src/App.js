@@ -5,6 +5,7 @@ import Main2 from './page/main2';
 import Main3 from './page/main3';
 import First from './page/first';
 import Login from './page/login';
+import Membership from './page/membership';
 import Review from './page/review';
 import Reviewcheck1 from './page/reviewcheck1';
 import Reviewcheck2 from './page/reviewcheck2';
@@ -17,6 +18,7 @@ import Changeinfo from './page/changeinfo';
 import Changeinfo1 from './page/changeinfo1';
 import Changeinfo4 from './page/changeinfo4';
 import Changeinfo5 from './page/changeinfo5';
+import Mypage from './page/mypage';
 import Alarm1 from './page/alarm1';
 import Alarm2 from './page/alarm2';
 import './App.css';
@@ -31,6 +33,7 @@ function App() {
           <Route path="/Main2" element={<Main2 />} />
           <Route path="/Main3" element={<Main3 />} />
           <Route path="/First" element={<First />} />
+          <Route path="/Membership" element={<Membership />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Review" element={<Review />} />
           <Route path="/Reviewcheck1" element={<Reviewcheck1 />} />
@@ -44,8 +47,10 @@ function App() {
           <Route path="/Changeinfo1" element={<Changeinfo1 />} />
           <Route path="/Changeinfo4" element={<Changeinfo4 />} />
           <Route path="/Changeinfo5" element={<Changeinfo5 />} />
+          <Route path="/Mypage" element={<Mypage />} />
           <Route path="/Alarm1" element={<Alarm1 />} />
           <Route path="/Alarm2" element={<Alarm2 />} />
+          
         </Routes>
       </div>
     </Router>

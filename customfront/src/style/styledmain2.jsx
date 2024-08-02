@@ -4,9 +4,10 @@ export const Container = styled.div`
   position: relative;
   margin: 0 auto;
   width: 393px;
-  height: 924px;
+  height: 1093px;
   margin-top: 0px;
   background: #fff;
+  text-align: center;
 `;
 
 export const Header = styled.div`
@@ -130,6 +131,40 @@ export const SmallBox2 = styled.div`
   text-align: center;
 `;
 
+export const SmallBox0 = styled.div`
+  display: inline-flex;
+  margin-left: 5px;
+  margin-bottom: 20px;
+  height: 25px;
+  width: 58px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0.5px solid #edd719;
+  background: #fffde8;
+  font-size: 10px;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+export const ProductName = styled.div`
+  display: inline-flex;
+  margin-left: 6px;
+  margin-bottom: 20px;
+  height: 25px;
+  width: 123px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0.5px solid #edd719;
+  background: #fffde8;
+  font-size: 10px;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
 export const List2 = styled.div`
   display: flex;
   flex-direction: column;
@@ -156,8 +191,36 @@ export const SmallBox3 = styled.div`
   display: inline-flex;
   margin-top: -25px;
   margin-left: 3px;
-  height: 30px;
+  height: 40px;
   width: 83px;
+  flex-shrink: 0;
+  background: #fff;
+  font-size: 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+export const SmallBox6 = styled.div`
+  display: inline-flex;
+  margin-top: -25px;
+  margin-left: 3px;
+  height: 40px;
+  width: 60px;
+  flex-shrink: 0;
+  background: #fff;
+  font-size: 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+export const ProductName2 = styled.div`
+  display: inline-flex;
+  margin-top: -25px;
+  margin-left: 5px;
+  height: 40px;
+  width: 128px;
   flex-shrink: 0;
   background: #fff;
   font-size: 10px;
@@ -170,8 +233,8 @@ export const SmallBox4 = styled.div`
   display: inline-flex;
   margin-top: -25px;
   margin-left: 3px;
-  height: 30px;
-  width: 83px;
+  height: 40px;
+  width: 60px;
   background: #fff;
   display: flex;
   justify-content: center;
@@ -261,34 +324,33 @@ export const Box = styled.div`
   box-shadow: 0px 0px 4px 4px #f2f2f2;
 `;
 
-export const Box2 = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 285px;
-  height: 37px;
-  gap: 7px;
-  margin-left: 10px;
-  overflow-y: auto;
-  scrollbar-width: none;
-  background-color: none;
-  border: none;
-`;
-
 export const SmallBox5 = styled.div`
- position: relative;
- display: flex;
-  margin-top: -23px;
-  margin-left: -18px;
-  width: 87.102px;
-  height: 21px;
+  position: relative;
+  display: flex;
+  width: 100%;  /* 부모 컨테이너의 크기에 맞추기 */
+  max-width: 100px;  /* 필요에 따라 크기 조정 */
+  height: 30px;  /* 높이 조정 */
   flex-shrink: 0;
   font-size: 13px;
   border-radius: 50px;
   background: #d9d9d9;
-  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  margin: 5px;  /* 간격 조정 */
+`;
+
+export const Box2 = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;  /* 아이템이 한 줄로 배치되도록 설정 */
+  width: 100%;
+  max-height: 40px;  /* 높이 조정 */
+  gap: 7px;
+  margin-left: 10px;
+  overflow-x: auto;  /* 수평 스크롤 추가 */
+  background-color: none;
+  border: none;
 `;
 
 export const DelButton = styled.div`
@@ -327,3 +389,53 @@ export const ButtonText = styled.div`
   font-weight: 300;
   line-height: normal;
 `;
+
+export const SelectedItemsSection = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 배치 */
+  align-items: flex-start;
+  margin-left: 10px;
+  width: 370px; /* 설정된 너비 */
+  height: 37px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 4px 4px #f2f2f2;
+  overflow: hidden; /* 전체 영역의 스크롤 숨기기 */
+`;
+
+export const SelectedItemsTitle = styled.h2`
+  font-size: 18px;
+  margin-bottom: 10px;
+`;
+
+export const SelectedItemsList = styled.ul`
+  display: flex; /* 가로로 배치 */
+  list-style-type: none;
+  padding: 0;
+  margin: 0; /* 기본 margin 제거 */
+  width: 325px; /* 부모 컨테이너의 너비에 맞춤 */
+  overflow-x: auto; /* 가로 스크롤 가능 */
+  overflow-y: hidden; /* 세로 스크롤 숨기기 */
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Webkit 기반 브라우저에서 스크롤바 숨기기 */
+  }
+`;
+
+export const SelectedItem = styled.li`
+  position: relative;
+  display: flex;
+  width: 100px; /* 아이템의 너비 설정 */
+  height: 30px; /* 아이템의 높이 설정 */
+  flex-shrink: 0; /* 아이템이 줄어들지 않도록 */
+  font-size: 13px;
+  border-radius: 50px;
+  background: #d9d9d9;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 5px; /* 아이템 간 간격 조정 */
+`;
+
