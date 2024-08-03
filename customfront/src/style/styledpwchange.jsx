@@ -155,3 +155,40 @@ export const ButtonText = styled.div`
   letter-spacing: -0.165px;
   cursor: pointer;
 `;
+
+export const InputBlank = styled.div`
+  margin-top: 7px;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  width: 328px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+  input {
+    border: none;
+    outline: none;
+    width: 273px;
+    margin-top: 15px;
+    margin-left: -30px;
+    color: #000;
+    font-family: "Gothic A1";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 250;
+    line-height: 150%; /* 19.5px */
+    letter-spacing: -0.143px;
+    background: none;
+  }
+`;
+
+export const Label = styled.div`
+  display: flex;
+  margin-top: 15px;
+  margin-left: 15px;
+  color: #000;
+  font-size: 18px;
+  font-weight: 500;
+  padding-left: 20px;
+`;

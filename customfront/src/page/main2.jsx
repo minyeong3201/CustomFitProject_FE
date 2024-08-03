@@ -5,14 +5,69 @@ import * as l from "../style/styledmain2";
 
 const Main2 = () => {
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  const [userError, setUserError] = useState(null); // 사용자 정보 에러 상태 추가
 
+  const goMypage = () => {
+    navigate(`/Mypage`);
+  };
+
+  const goMyreview = () => {
+    navigate(`/Review`);
+  };
+
+  const goLogin = () => {
+    navigate(`/Login`);
+  };
+
+  const goMain2 = () => {
+    navigate(`/Main2`);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  // 사용자 정보를 가져오는 함수
+  const fetchUserInfo = async () => {
+    try {
+      const token = localStorage.getItem('token'); // 로그인 후 저장된 토큰을 가져옵니다.
+      if (!token) {
+        throw new Error('로그인 토큰이 없습니다.');
+      }
+
+      const response = await axios.get('http://127.0.0.1:8000/myPage/profile', {
+        headers: {
+          'Authorization': `Token ${token}`  // Authorization 헤더에 토큰을 포함합니다.
+        }
+      });
+
+      console.log('사용자 정보:', response.data); // 디버그 로그 추가
+      setUserInfo(response.data);
+    } catch (error) {
+      console.error('사용자 정보 가져오기 오류:', error.message);
+      setUserError(error.message); // 에러 메시지 설정
+    }
+  };
+
+  // 컴포넌트가 마운트될 때 사용자 정보를 가져옵니다.
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+  // 나머지 상태 및 함수 정의
   const [box2Items, setBox2Items] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [list2Items, setList2Items] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [cartError, setCartError] = useState(null); // New state for cart validation error
+  const [cartError, setCartError] = useState(null); 
 
   const axiosInstance = axios.create({
     baseURL: "http://127.0.0.1:8000/",
@@ -220,7 +275,7 @@ const Main2 = () => {
 
   const handleCompare = async () => {
     setLoading(true);
-    setCartError(null); // Clear previous cart errors
+    setCartError(null);
     try {
       const cartResponse = await axiosInstance.get("customFit/cart/");
       if (cartResponse.data.length === 0) {
@@ -243,12 +298,29 @@ const Main2 = () => {
     }
   };
 
+  const handleLogout = () => {
+    // 여기서 로그아웃 관련 상태 관리 또는 API 호출
+    // 예를 들어, `localStorage`에서 사용자 정보를 제거합니다.
+    localStorage.removeItem('user'); // 사용자의 로그인 상태 정보 제거
+
+    console.log("로그아웃 성공");
+    navigate('/Login'); // 로그인 페이지로 이동
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
     return <div>Error: {error.message}</div>;
+  }
+
+  if (userError) { // 사용자 정보 에러가 있는 경우
+    return <div>Error: {userError}</div>;
+  }
+
+  if (!userInfo) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -295,15 +367,77 @@ const Main2 = () => {
             left: "8px",
             cursor: "pointer",
           }}
-          onClick={() => navigate(-1)}
+          onClick={toggleMenu}
         />
         <l.Border>
           <div></div>
         </l.Border>
       </l.Header>
 
+      {isMenuOpen && (
+        <>
+          <l.Backdrop onClick={closeMenu} />
+          <l.DropdownMenu>
+            <l.DropdownItem onClick={goMypage}>
+              <img
+                id="mypage"
+                src={`${process.env.PUBLIC_URL}/logo/mypage.svg`}
+                alt="mypage"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </l.DropdownItem>
+            <l.DropdownItem onClick={goMyreview}>
+              <img
+                id="myreview"
+                src={`${process.env.PUBLIC_URL}/logo/myreview.svg`}
+                alt="myreview"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </l.DropdownItem>
+            <l.DropdownItem onClick={goMain2}>
+              <img
+                id="mainpage"
+                src={`${process.env.PUBLIC_URL}/logo/mainpage.svg`}
+                alt="mainpage"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </l.DropdownItem>
+            <l.DropdownItem onClick={() => { handleLogout(); toggleMenu(); }}>
+              <img
+                id="logout"
+                src={`${process.env.PUBLIC_URL}/logo/logout.svg`}
+                alt="logout"
+                style={{
+                  position: "absolute",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+              />
+            </l.DropdownItem>
+          </l.DropdownMenu>
+        </>
+      )}
+
       <l.Top>
-        000님에게 맞는 <br />
+       {userInfo.first_name}님에게 맞는 <br />
         식품을 찾아볼까요?
       </l.Top>
 
@@ -404,7 +538,6 @@ const Main2 = () => {
         <l.Button onClick={handleCompare}>
           <l.ButtonText>비교하기</l.ButtonText>
         </l.Button>
-        {/* Display cart error message */}
         {cartError && <div style={{ color: "red", marginTop: "10px" }}>{cartError}</div>}
       </l.Body>
     </l.Container>

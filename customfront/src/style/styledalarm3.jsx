@@ -55,10 +55,9 @@ export const Top = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  #alarm2{
+  #alarm3{
   margin-top: 470px;
   margin-left: 0px;
-
 
   }
 `;
@@ -80,31 +79,6 @@ export const Ybox = styled.div`
   width: 393px;
   height: 240px;
   flex-shrink: 0;
-`;
-
-export const Button = styled.div`
-  z-index: 4;
-  margin-top: 515px;
-  margin-left: 28px;
-  width: 334px;
-  height: 45px;
-  flex-shrink: 0;
-  border-radius: 30px;
-  border: 0.5px solid #fff9c2;
-  background: #000;
-  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
-`;
-
-export const ButtonText = styled.div`
-  color: #fff;
-  margin-top: 10px;
-  text-align: center;
-  font-family: "Gothic A1";
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%;
 `;
 
 // 드롭다운 메뉴 스타일

@@ -110,6 +110,7 @@ export const Wbox = styled.div`
 
 export const Text = styled.div`
   display: flex;
+  margin-top: -35px;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;

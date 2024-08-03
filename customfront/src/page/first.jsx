@@ -45,7 +45,7 @@ const First = () => {
           src="https://lottie.host/8a90597c-f6df-4de5-a72b-a7e8cfb6d37e/lN0eGr8bK9.json"
           background="transparent"
           speed="1"
-          style={{ width: "300px", height: "300px" }}
+          style={{ width: "300px", height: "300px",}}
           loop
           autoplay
         ></dotlottie-player>
@@ -105,6 +105,7 @@ const First = () => {
           id="text2"
           src={`${process.env.PUBLIC_URL}/logo/text2.svg`}
           alt="text2"
+          height="260px"
         />
       </f1.Body2>
       <f1.Body3>
@@ -143,17 +144,22 @@ const First = () => {
           <f1.Card>
             <img
               id="card"
-              src={`${process.env.PUBLIC_URL}/logo/card.png`}
+              src={`${process.env.PUBLIC_URL}/logo/card1.svg`}
               alt="card"
             />
             <img
               id="card"
-              src={`${process.env.PUBLIC_URL}/logo/card.png`}
+              src={`${process.env.PUBLIC_URL}/logo/card2.svg`}
               alt="card"
             />
             <img
               id="card"
-              src={`${process.env.PUBLIC_URL}/logo/card.png`}
+              src={`${process.env.PUBLIC_URL}/logo/card3.svg`}
+              alt="card"
+            />
+            <img
+              id="card"
+              src={`${process.env.PUBLIC_URL}/logo/card4.svg`}
               alt="card"
             />
           </f1.Card>

@@ -1,7 +1,9 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import * as s from "../style/styledmembership";
+
+axios.defaults.withCredentials = true;
 
 const Membership = () => {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ const Membership = () => {
     terms_accepted_2: false,
     terms_accepted_optional: false,
   });
+  const [errors, setErrors] = useState({}); // 에러메시지 관리
 
   const {
     username,
@@ -29,7 +32,6 @@ const Membership = () => {
     terms_accepted_optional,
   } = formData;
 
-  // 전체 동의하기 클릭 시 호출되는 함수
   const handleCheckAll = () => {
     const newValue = !formData.terms_accepted;
     setFormData({
@@ -41,7 +43,6 @@ const Membership = () => {
     });
   };
 
-  // 약관 체크박스 클릭 시 호출되는 함수
   const toggleOptionalCheckbox = () => {
     const newValue = !formData.terms_accepted_optional;
     setFormData({
@@ -50,60 +51,68 @@ const Membership = () => {
     });
   };
 
-  const onChange = e => {
-    console.log(`Field ${e.target.name} changed to:`, e.target.value);
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  
-  const onSubmit = async e => {
-    e.preventDefault();
-    console.log("폼 제출됨");
-    console.log("Current formData:", formData);
-  
-    if (password !== password_confirm) {
-      alert("비밀번호가 일치하지 않습니다");
-      return;
+
+  const getCsrfToken = () => {
+    const csrfToken = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("csrftoken="))
+      ?.split("=")[1];
+    if (csrfToken) {
+      return csrfToken;
+    } else {
+      console.error("CSRF token not found");
+      return null;
     }
-  
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
     try {
+      const csrfToken = getCsrfToken();
       const config = {
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken,
+        },
+        withCredentials: true,
       };
       const body = JSON.stringify(formData);
-      console.log("Sending request with body:", body);
-  
-      const res = await axios.post('http://127.0.0.1:8000/register/step1/', body, config);
-      const { first_name } = res.data; // 회원가입 응답에서 first_name 추출
-      localStorage.setItem('first_name', first_name); // 로컬 스토리지에 저장
-      navigate('/dashboard');
-      console.log('회원가입 성공:', res.data);
-      //navigate(-1); 
+
+      const res = await axios.post(
+        "http://127.0.0.1:8000/register/step1/",
+        body,
+        config
+      );
+      console.log("회원가입 성공:", res.data);
+      console.log("Session cookie:", document.cookie); // 세션 쿠키 확인
+      navigate("/info1");
     } catch (err) {
-      console.error("Error during axios request:", err);
       if (err.response && err.response.data) {
-        if (err.response.data.username) {
-          alert("이미 사용 중인 사용자 이름입니다.");
-          console.error("Username 오류:", err.response.data.username);
-        } else {
-          alert("회원가입 실패: " + JSON.stringify(err.response.data));
-          console.error("회원가입 실패:", err.response.data);
+        const serverErrors = err.response.data;
+        if (
+          serverErrors.username &&
+          serverErrors.username.includes(
+            "A user with that username already exists."
+          )
+        ) {
+          serverErrors.username = ["중복된 아이디가 있습니다."];
         }
+        setErrors(serverErrors);
       } else {
-        alert("서버와의 통신 오류: " + err.message);
-        console.error("서버와의 통신 오류:", err.message);
+        console.error("Error during axios request:", err);
       }
     }
   };
-  
 
   return (
     <s.Container>
       <s.Header>
         <img
           id="back"
-          src={`${process.env.PUBLIC_URL}/logo/backbtn.svg`} // 수정된 부분
+          src={`${process.env.PUBLIC_URL}/logo/backbtn.svg`}
           alt="뒤로 버튼"
           style={{
             position: "absolute",
@@ -128,9 +137,12 @@ const Membership = () => {
               name="username"
               value={username}
               onChange={onChange}
-              placeholder="4~16자리 / 영문, 숫자, 특수문자 사용 가능"
+              placeholder="아이디를 입력해주세요."
               required
             />
+            {errors.username && (
+              <p style={{ color: "red" }}>{errors.username}</p>
+            )}
           </s.InputBlank>
 
           <s.Label>* 비밀번호</s.Label>
@@ -140,9 +152,12 @@ const Membership = () => {
               name="password"
               value={password}
               onChange={onChange}
-              placeholder="8~16자리 / 영문, 숫자, 특수문자 조합"
+              placeholder="비밀번호를 입력해주세요."
               required
             />
+            {errors.password && (
+              <p style={{ color: "red" }}>{errors.password}</p>
+            )}
           </s.InputBlank>
 
           <s.Label>* 비밀번호 확인하기</s.Label>
@@ -152,9 +167,12 @@ const Membership = () => {
               name="password_confirm"
               value={password_confirm}
               onChange={onChange}
-              placeholder="8~16자리 / 영문, 숫자, 특수문자 조합"
+              placeholder="비밀번호를 확인해주세요."
               required
             />
+            {errors.password_confirm && (
+              <p style={{ color: "red" }}>{errors.password_confirm}</p>
+            )}
           </s.InputBlank>
 
           <s.Label>* 이름</s.Label>
@@ -167,6 +185,9 @@ const Membership = () => {
               placeholder="이름을 입력해주세요."
               required
             />
+            {errors.first_name && (
+              <p style={{ color: "red" }}>{errors.first_name}</p>
+            )}
           </s.InputBlank>
 
           <s.Label>* Email</s.Label>
@@ -179,6 +200,7 @@ const Membership = () => {
               placeholder="Email을 입력해주세요."
               required
             />
+            {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
           </s.InputBlank>
 
           <s.Label>약관</s.Label>
@@ -207,6 +229,9 @@ const Membership = () => {
                 />
                 (필수) 개인회원 약관에 동의
               </label>
+              {errors.terms_accepted_1 && (
+                <p style={{ color: "red" }}>{errors.terms_accepted_1}</p>
+              )}
             </s.BottomText>
 
             <s.BottomText>
@@ -225,6 +250,9 @@ const Membership = () => {
                 />
                 (필수) 개인정보 수집 및 이용에 동의
               </label>
+              {errors.terms_accepted_2 && (
+                <p style={{ color: "red" }}>{errors.terms_accepted_2}</p>
+              )}
             </s.BottomText>
 
             <s.BottomText>
@@ -237,6 +265,9 @@ const Membership = () => {
                 />
                 (선택) 이메일 등 마케팅 정보 수신 동의
               </label>
+              {errors.terms_accepted_optional && (
+                <p style={{ color: "red" }}>{errors.terms_accepted_optional}</p>
+              )}
             </s.BottomText>
           </s.Bottom>
 

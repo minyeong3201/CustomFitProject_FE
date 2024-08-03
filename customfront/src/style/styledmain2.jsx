@@ -8,6 +8,7 @@ export const Container = styled.div`
   margin-top: 0px;
   background: #fff;
   text-align: center;
+  overflow: ${(props) => (props.isMenuOpen ? "hidden" : "auto")};
 `;
 
 export const Header = styled.div`
@@ -437,5 +438,66 @@ export const SelectedItem = styled.li`
   align-items: center;
   text-align: center;
   margin: 5px; /* 아이템 간 간격 조정 */
+`;
+
+// 드롭다운 메뉴 스타일
+export const Backdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+`;
+
+export const DropdownMenu = styled.div`
+  position: fixed; /* 헤더 기준으로 고정 */
+  top: 80px; /* 헤더 바로 아래에 위치 */
+  left: 70%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 314px;
+  border-radius: 50px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 8px #544c4c;
+  padding: 20px;
+  z-index: 11; /* 백드롭보다 위에 표시 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  #mypage {
+    margin-top: 15px;
+    margin-right: 7px;
+  }
+  #myreview {
+    margin-top: 107px;
+    margin-right: 7px;
+  }
+  #mainpage {
+    margin-top: 200px;
+    margin-right: 7px;
+  }
+  #logout {
+    margin-top: 2px;
+    margin-right: 2px;
+  }
+`;
+
+export const DropdownItem = styled.button`
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  width: 100%;
+  text-align: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+
+
 `;
 

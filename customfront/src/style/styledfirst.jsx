@@ -72,7 +72,7 @@ export const Body3 = styled.div`
 
 export const Sub = styled.div`
   justify-content: flex-start;
-  margin-top: -210px;
+  margin-top: -130px;
   margin-left: -100px;
   flex-shrink: 0;
 `;
@@ -95,7 +95,7 @@ export const Box = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-top: -150px;
+  margin-top: -140px;
   width: 393px;
   height: 465px;
   flex-shrink: 0;
@@ -119,7 +119,7 @@ export const Title = styled.div`
 `;
 
 export const Box2 = styled.div`
-  margin-top: 100px;
+  margin-top: 0px;
   display: flex;
   flex-direction: column;
   width: 393px;
@@ -141,7 +141,7 @@ export const News = styled.div`
   margin-top: 20px;
   flex-direction: row;
   width: 340px;
-  height: 280px; 
+  height: 350px; 
   gap: 7px; 
   overflow-x: auto; 
   overflow-y: hidden;
@@ -157,14 +157,15 @@ export const News = styled.div`
 export const Card = styled.div`
   position: relative;
   margin-left: 5px;
+  margin-top: 10px;
   flex-shrink: 0;
   width: 100%; 
-  height: 280px; 
+  height: 330px; 
   display: flex; 
   gap: 15px; 
   img {
     width: 100%; 
-    height: auto; 
+    height: 100%; 
   }
 `;
 
@@ -212,7 +213,7 @@ export const Bottom = styled.div`
   position: absolute;
   justify-content: center;
   align-items: center;
-  margin-top: 320px;
+  margin-top: 350px;
   width: 340px;
   height: 45px;
   flex-shrink: 0;

@@ -5,8 +5,6 @@ import * as p from "../style/styledpwchange";
 const Pwchange = () => {
   const navigate = useNavigate();
 
-
-
   return (
     <p.Container>
       <p.Header>
@@ -57,26 +55,17 @@ const Pwchange = () => {
         </p.Border>
       </p.Header>
 
-
-      <p.Top>
-      </p.Top>
-
-      <p.Kit>
-      비밀번호 변경하기
-      </p.Kit>
-
+      <p.Top></p.Top>
       <p.Check>계정 생성시 사용한 E Mail을 입력해주세요.</p.Check>
-
 
       <p.Body>
         <p.Button>
           <p.ButtonImage>
             <img src={`${process.env.PUBLIC_URL}/logo/plus.svg`} alt="icon" />
-          </p.ButtonImage> 
+          </p.ButtonImage>
           <p.ButtonText>더 많은 알림 확인하기</p.ButtonText>
         </p.Button>
       </p.Body>
-
     </p.Container>
   );
 };

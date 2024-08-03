@@ -110,13 +110,13 @@ export const SmallBox5 = styled.div`
   flex-shrink: 0;
   border-radius: 15px;
   border: 0.3px solid #000;
-  background: ${(props) => (props.isClicked ? "#fffba6" : "#fff")};
+  background: ${(props) => (props.$isclicked ? "#fffba6" : "#fff")};
   justify-content: center;
   align-items: center;
   text-align: center;
   cursor: pointer;
   filter: ${(props) =>
-    props.isClicked ? "drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25))" : "none"};
+    props.$isclicked ? "drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25))" : "none"};
   transition: all 0.1s ease;
   span {
     margin-left: 10px;

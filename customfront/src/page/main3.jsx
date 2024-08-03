@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import * as z from "../style/styledmain3";
 
 const Main3 = () => {
@@ -9,14 +10,42 @@ const Main3 = () => {
 
   const [rating, setRating] = useState(0);
   const [firstName, setFirstName] = useState(""); // 사용자 이름 상태 추가
+  const [userInfo, setUserInfo] = useState(null); // 사용자 정보 상태 추가
+  const [userError, setUserError] = useState(null); // 사용자 정보 에러 상태 추가
 
   useEffect(() => {
     // 로컬 스토리지에서 first_name 가져오기
-    const storedFirstName = localStorage.getItem('first_name');
+    const storedFirstName = localStorage.getItem("first_name");
     console.log("로컬 스토리지에서 가져온 first_name:", storedFirstName); // 콘솔 로그 추가
     if (storedFirstName) {
       setFirstName(storedFirstName);
     }
+  }, []);
+
+  // 사용자 정보를 가져오는 함수
+  const fetchUserInfo = async () => {
+    try {
+      const token = localStorage.getItem("token"); // 로그인 후 저장된 토큰을 가져옵니다.
+      if (!token) {
+        throw new Error("로그인 토큰이 없습니다.");
+      }
+
+      const response = await axios.get("http://127.0.0.1:8000/myPage/profile", {
+        headers: {
+          Authorization: `Token ${token}`, // Authorization 헤더에 토큰을 포함합니다.
+        },
+      });
+
+      console.log("사용자 정보:", response.data); // 디버그 로그 추가
+      setUserInfo(response.data);
+    } catch (error) {
+      console.error("사용자 정보 가져오기 오류:", error.message);
+      setUserError(error.message); // 에러 메시지 설정
+    }
+  };
+
+  useEffect(() => {
+    fetchUserInfo(); // 컴포넌트가 마운트될 때 사용자 정보를 가져옵니다.
   }, []);
 
   const goMain = () => {
@@ -30,6 +59,40 @@ const Main3 = () => {
   const handleStarClick = (value) => {
     setRating(value);
   };
+
+  // 질병 이름 매핑
+  const diseaseMapping = {
+    diabetes: "당뇨",
+    obesity: "비만",
+    muscle_loss: "근손실",
+    hypertension: "고혈압",
+  };
+
+  // 질병에 따른 <z.Stext> 텍스트 매핑
+  const diseaseStextMapping = {
+    diabetes: "당류함량",
+    obesity: "칼로리",
+    muscle_loss: "단백질 함량",
+    hypertension: "나트륨 함량",
+  };
+
+  // 사용자 정보에서 질병 이름을 변환
+  const getDiseaseName = (diseaseKey) => {
+    return diseaseMapping[diseaseKey] || diseaseKey;
+  };
+
+  // 사용자 정보에서 <z.Stext>의 텍스트를 결정
+  const getStextLabel = (diseaseKey) => {
+    return diseaseStextMapping[diseaseKey] || "정보";
+  };
+
+  if (userError) { // 사용자 정보 에러가 있는 경우
+    return <div>Error: {userError}</div>;
+  }
+
+  if (!userInfo) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <z.Container>
@@ -84,21 +147,19 @@ const Main3 = () => {
 
       <z.Ybox>
         <z.Top>
-          {firstName ? `${firstName}님의 건강 기준에` : "회원님의 건강 기준에"}
+          {userInfo.first_name}님의 건강 기준에
           <br /> 가장 적합한 제품이에요!
         </z.Top>
         <z.Keyword>
-          <z.SmallBox>#당뇨</z.SmallBox>
-          <z.SmallBox>#당류 싫어</z.SmallBox>
+          <z.SmallBox>#{getDiseaseName(userInfo.disease)}</z.SmallBox>
         </z.Keyword>
 
         <z.Wbox>
           <z.Text>{recommendedProduct?.product_name || "제품명입니다"}</z.Text>
-          <z.Stext>당류함량</z.Stext>
+          <z.Stext>{getStextLabel(userInfo.disease)}</z.Stext>
           <z.Ntext>{recommendedProduct?.protein || "제품명입니다"}g</z.Ntext>
-          <z.Etext>선택하신 제품들 중 당류 함량이 가장 낮아요.</z.Etext>
         </z.Wbox>
-        <z.Otext>[당뇨]를 선택한 다른 회원들의 의견이에요!</z.Otext>
+        <z.Otext>[{getDiseaseName(userInfo.disease)}] 선택한 다른 회원들의 의견이에요!</z.Otext>
       </z.Ybox>
 
       <z.Sbox>
@@ -120,7 +181,8 @@ const Main3 = () => {
         <z.Explain>
           만족도를 체크해 주시면, 추천 알고리즘을 정비하는 데 도움이 돼요!
           <br />
-          {firstName ? `${firstName}님의 만족도에 기반하여` : "회원님의 만족도에 기반하여"} 더 좋은 서비스를 제공할게요!
+          {firstName}님의 만족도에 기반하여
+          더 좋은 서비스를 제공할게요!
         </z.Explain>
         <z.Star>
           {[1, 2, 3, 4, 5].map((value) => (
@@ -134,7 +196,12 @@ const Main3 = () => {
               }
               onClick={() => handleStarClick(value)}
               alt={`별 ${value}개`}
-              style={{ cursor: "pointer", width: "44px", height: "43px", margin: "2px" }}
+              style={{
+                cursor: "pointer",
+                width: "44px",
+                height: "43px",
+                margin: "2px",
+              }}
             />
           ))}
         </z.Star>

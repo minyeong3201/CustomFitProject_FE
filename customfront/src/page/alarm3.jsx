@@ -1,33 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as q from "../style/styledalarm1";
+import * as a3 from "../style/styledalarm3";
 
-const Alarm1 = () => {
+const Alarm3 = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const goMain = () => {
     navigate(`/`);
-  };
-
-  const goMypage = () => {
-    navigate(`/Mypage`);
-  };
-
-  const goMyreview = () => {
-    navigate(`/Review`);
-  };
-
-  const goLogin = () => {
-    navigate(`/Login`);
-  };
-
-  const goAlarm2 = () => {
-    navigate(`/Alarm2`);
-  };
-
-  const goAlarm3 = () => {
-    navigate(`/Alarm3`);
   };
 
   const toggleMenu = () => {
@@ -38,24 +18,9 @@ const Alarm1 = () => {
     setIsMenuOpen(false);
   };
 
-  // Box2의 아이템 상태 관리
-  const box2Items = [
-    { id: 1, text: "공지 제목입니다."},
-    { id: 2, text: "공지 제목입니다."},
-  ];
-
-  // 아이템 클릭 시 이동할 페이지를 결정하는 함수
-  const handleItemClick = (id) => {
-    if (id === 1) {
-      goAlarm2();
-    } else if (id === 2) {
-      goAlarm3();
-    }
-  };
-
   return (
-    <q.Container>
-      <q.Header>
+    <a3.Container>
+      <a3.Header>
         <img
           id="back"
           src={`${process.env.PUBLIC_URL}/logo/backbtn.svg`}
@@ -99,16 +64,30 @@ const Alarm1 = () => {
           }}
           onClick={toggleMenu}
         />
-        <q.Border>
+        <a3.Border>
           <div></div>
-        </q.Border>
-      </q.Header>
+        </a3.Border>
+      </a3.Header>
+
+      <a3.Ybox>
+        <a3.Top>
+          <img
+            id="alarm3"
+            src={`${process.env.PUBLIC_URL}/logo/alarm3.svg`}
+            alt="alarm3"
+            style={{
+              height: "750px"
+
+            }}
+          />
+        </a3.Top>
+      </a3.Ybox>
 
       {isMenuOpen && (
         <>
-          <q.Backdrop onClick={closeMenu} />
-          <q.DropdownMenu>
-            <q.DropdownItem onClick={goMypage}>
+          <a3.Backdrop onClick={closeMenu} />
+          <a3.DropdownMenu>
+            <a3.DropdownItem onClick={() => navigate("/mypage")}>
               <img
                 id="mypage"
                 src={`${process.env.PUBLIC_URL}/logo/mypage.svg`}
@@ -121,8 +100,8 @@ const Alarm1 = () => {
                 }}
                 onClick={toggleMenu}
               />
-            </q.DropdownItem>
-            <q.DropdownItem onClick={goMyreview}>
+            </a3.DropdownItem>
+            <a3.DropdownItem onClick={() => navigate("/myreview")}>
               <img
                 id="myreview"
                 src={`${process.env.PUBLIC_URL}/logo/myreview.svg`}
@@ -135,8 +114,8 @@ const Alarm1 = () => {
                 }}
                 onClick={toggleMenu}
               />
-            </q.DropdownItem>
-            <q.DropdownItem onClick={goMain}>
+            </a3.DropdownItem>
+            <a3.DropdownItem onClick={goMain}>
               <img
                 id="mainpage"
                 src={`${process.env.PUBLIC_URL}/logo/mainpage.svg`}
@@ -149,43 +128,12 @@ const Alarm1 = () => {
                 }}
                 onClick={toggleMenu}
               />
-            </q.DropdownItem>
-            <q.DropdownItem onClick={goLogin}>
-              <img
-                id="logout"
-                src={`${process.env.PUBLIC_URL}/logo/logout.svg`}
-                alt="logout"
-                style={{
-                  position: "absolute",
-                  right: "8px",
-                  cursor: "pointer",
-                }}
-                onClick={toggleMenu}
-              />
-            </q.DropdownItem>
-          </q.DropdownMenu>
+            </a3.DropdownItem>
+          </a3.DropdownMenu>
         </>
       )}
-
-      <q.Ybox>
-        <q.Top>알림 확인하기</q.Top>
-      </q.Ybox>
-
-      <q.Body>
-        <q.Box>
-          <q.Box2>
-            {box2Items.map((item) => (
-              <q.Keywordd key={item.id} onClick={() => handleItemClick(item.id)}>
-                <q.SmallBox5>
-                  <span style={{ fontSize: "13px" }}>{item.text}</span>
-                </q.SmallBox5>
-              </q.Keywordd>
-            ))}
-          </q.Box2>
-        </q.Box>
-      </q.Body>
-    </q.Container>
+    </a3.Container>
   );
 };
 
-export default Alarm1;
+export default Alarm3;

@@ -84,7 +84,7 @@ export const Ybox = styled.div`
   align-items: center;
   text-align: flex-start;
   width: 393px;
-  height: 240px;
+  height: 190px;
   flex-shrink: 0;
 `;
 

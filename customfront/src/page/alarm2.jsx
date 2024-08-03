@@ -10,6 +10,10 @@ const Alarm2 = () => {
     navigate(`/`);
   };
 
+  const goChangeinfo = () => {
+    navigate(`/changeinfo`);
+  };
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -69,6 +73,26 @@ const Alarm2 = () => {
         </y.Border>
       </y.Header>
 
+      <y.Ybox>
+        <y.Top>
+          <img
+            id="alarm2"
+            src={`${process.env.PUBLIC_URL}/logo/alarm2.svg`}
+            alt="alarm2"
+            style={{
+              height: "750px"
+
+            }}
+          />
+        </y.Top>
+      </y.Ybox>
+
+      <y.Body>
+          <y.Button>
+            <y.ButtonText onClick={goChangeinfo}>키워드 변경하러 가기</y.ButtonText>
+          </y.Button>
+      </y.Body>
+
       {isMenuOpen && (
         <>
           <y.Backdrop onClick={closeMenu} />
@@ -118,16 +142,6 @@ const Alarm2 = () => {
           </y.DropdownMenu>
         </>
       )}
-
-      <y.Ybox>
-        <y.Top></y.Top>
-      </y.Ybox>
-
-      <y.Body>
-        <y.Button>
-          <y.ButtonText>키워드 변경하러 가기</y.ButtonText>
-        </y.Button>
-      </y.Body>
     </y.Container>
   );
 };
