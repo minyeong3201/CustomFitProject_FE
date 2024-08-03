@@ -128,7 +128,7 @@ const Membership = () => {
               name="username"
               value={username}
               onChange={onChange}
-              placeholder="아이디를 입력해주세요."
+              placeholder="4~16자리 / 영문, 숫자, 특수문자 사용 가능"
               required
             />
           </s.InputBlank>
@@ -140,7 +140,7 @@ const Membership = () => {
               name="password"
               value={password}
               onChange={onChange}
-              placeholder="비밀번호를 입력해주세요."
+              placeholder="8~16자리 / 영문, 숫자, 특수문자 조합"
               required
             />
           </s.InputBlank>
@@ -152,7 +152,7 @@ const Membership = () => {
               name="password_confirm"
               value={password_confirm}
               onChange={onChange}
-              placeholder="비밀번호를 확인해주세요."
+              placeholder="8~16자리 / 영문, 숫자, 특수문자 조합"
               required
             />
           </s.InputBlank>

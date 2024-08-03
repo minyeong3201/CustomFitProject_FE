@@ -12,6 +12,7 @@ const Main2 = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [cartError, setCartError] = useState(null); // New state for cart validation error
 
   const axiosInstance = axios.create({
     baseURL: "http://127.0.0.1:8000/",
@@ -142,7 +143,8 @@ const Main2 = () => {
     }));
 
     const uniqueItems = newItems.filter(
-      (newItem) => !box2Items.some((boxItem) => boxItem.product_id === newItem.product_id)
+      (newItem) =>
+        !box2Items.some((boxItem) => boxItem.product_id === newItem.product_id)
     );
 
     try {
@@ -160,20 +162,26 @@ const Main2 = () => {
   };
 
   const deleteItemFromBox2 = (id) => {
-    setBox2Items((prevItems) => prevItems.filter((item) => item.product_id !== id));
+    setBox2Items((prevItems) =>
+      prevItems.filter((item) => item.product_id !== id)
+    );
   };
 
   const clearBox2Items = async () => {
     try {
       const itemIds = box2Items.map((item) => item.product_id);
       if (itemIds.length > 0) {
-        await axiosInstance.post("customFit/cart/clear/", {
-          item_ids: itemIds,
-        }, {
-          headers: {
-            "X-CSRFToken": localStorage.getItem("csrftoken") || "",
+        await axiosInstance.post(
+          "customFit/cart/clear/",
+          {
+            item_ids: itemIds,
           },
-        });
+          {
+            headers: {
+              "X-CSRFToken": localStorage.getItem("csrftoken") || "",
+            },
+          }
+        );
       }
       setBox2Items([]);
       console.log("Box2의 모든 상품이 카트에서 제거되었습니다.");
@@ -212,13 +220,12 @@ const Main2 = () => {
 
   const handleCompare = async () => {
     setLoading(true);
+    setCartError(null); // Clear previous cart errors
     try {
       const cartResponse = await axiosInstance.get("customFit/cart/");
       if (cartResponse.data.length === 0) {
-        setError(
-          new Error("카트에 상품이 없습니다. 상품을 추가한 후 비교해 주세요.")
-        );
-        return;
+        setCartError("상품을 추가한 후 비교해 주세요.");
+        return; 
       }
 
       const response = await axiosInstance.get("customFit/compare/");
@@ -397,6 +404,8 @@ const Main2 = () => {
         <l.Button onClick={handleCompare}>
           <l.ButtonText>비교하기</l.ButtonText>
         </l.Button>
+        {/* Display cart error message */}
+        {cartError && <div style={{ color: "red", marginTop: "10px" }}>{cartError}</div>}
       </l.Body>
     </l.Container>
   );
