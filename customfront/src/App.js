@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Main from './page/main';
 import Main0 from './page/main0';
 import Main2 from './page/main2';
 import Main3 from './page/main3';
@@ -37,10 +36,10 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Main2 />} />  {/* 기본 경로 처리 */}
+          <Route path="/" element={<First />} />  {/* 기본 경로 처리 */}
+          <Route path="/Main2" element={<Main2 />} /> 
           <Route path="/Main0" element={<Main0 />} />
           <Route path="/Main3" element={<Main3 />} />
-          <Route path="/First" element={<First />} />
           <Route path="/Membership" element={<Membership />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Login2" element={<Login2 />} />

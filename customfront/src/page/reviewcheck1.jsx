@@ -33,7 +33,7 @@ const Reviewcheck1 = () => {
   };
 
     const goMain2 = () => {
-    navigate(`/`);
+    navigate(`/Main2`);
   };
 
   const goReview = () => {

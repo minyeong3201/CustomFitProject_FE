@@ -11,7 +11,7 @@ const Reviewcheck2 = () => {
   const [productData, setProductData] = useState(null);
 
   const goMain2 = () => {
-    navigate(`/`);
+    navigate(`/Main2`);
   };
 
   const goMain0 = () => {

@@ -12,7 +12,7 @@ const Reviewcheck3 = () => {
   const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지 상태 추가
 
   const goMain2 = () => {
-    navigate(`/`);
+    navigate(`/Main2`);
   };
 
   const goMain0 = () => {

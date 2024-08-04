@@ -6,8 +6,12 @@ const Alarm2 = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const goMain = () => {
-    navigate(`/`);
+  const goMain0 = () => {
+    navigate(`/Main0`);
+  };
+
+  const goMain2 = () => {
+    navigate(`/Main2`);
   };
 
   const goChangeinfo = () => {
@@ -42,7 +46,7 @@ const Alarm2 = () => {
           src={`${process.env.PUBLIC_URL}/logo/ylogo.svg`}
           alt="logo"
           width="40px"
-          onClick={goMain}
+          onClick={goMain2}
         />
         <img
           id="alarm"
@@ -125,7 +129,7 @@ const Alarm2 = () => {
                 onClick={toggleMenu}
               />
             </y.DropdownItem>
-            <y.DropdownItem onClick={goMain}>
+            <y.DropdownItem onClick={goMain0}>
               <img
                 id="mainpage"
                 src={`${process.env.PUBLIC_URL}/logo/mainpage.svg`}

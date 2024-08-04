@@ -11,7 +11,7 @@ const Alarm1 = () => {
   };
 
   const goMain2 = () => {
-    navigate(`/`);
+    navigate(`/Main2`);
   };
 
   const goAlarm1 = () => {

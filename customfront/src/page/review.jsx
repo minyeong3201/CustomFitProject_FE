@@ -15,7 +15,7 @@ const Review = () => {
   const [userInfo, setUserInfo] = useState(null);
 
   const goMain2 = () => {
-    navigate(`/`);
+    navigate(`/Main2`);
   };
 
   const goMain0 = () => {

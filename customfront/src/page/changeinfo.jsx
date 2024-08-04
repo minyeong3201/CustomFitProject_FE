@@ -12,7 +12,7 @@ const Changeinfo = () => {
   };
 
   const goMain2 = () => {
-    navigate(`/`);
+    navigate(`/Main2`);
   };
 
   const goMypage = () => {

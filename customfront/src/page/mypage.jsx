@@ -29,7 +29,7 @@ const Mypage = () => {
   };
 
   const goMain2 = () => {
-    navigate(`/`);
+    navigate(`/Main2`);
   };
 
   const goMypage = () => {
@@ -138,7 +138,6 @@ const Mypage = () => {
     return mapping[key] || key;
   };
 
-  // userInfo가 로드되지 않았거나 에러가 발생한 경우 로딩 상태 표시
   if (!userInfo) {
     return <div>Loading...</div>;
   }

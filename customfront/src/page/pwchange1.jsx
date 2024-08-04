@@ -5,8 +5,8 @@ import * as p1 from "../style/styledpwchange1";
 const Pwchange1 = () => {
   const navigate = useNavigate();
 
-  const goMain = () => {
-    navigate(`/`);
+  const goMain2 = () => {
+    navigate(`/Main2`);
   };
 
   return (
