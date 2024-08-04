@@ -16,7 +16,7 @@ export const Header = styled.div`
   background: #fff;
   width: 393px;
   height: 50px;
-  z-index: 2;
+  z-index: 999;
   #back {
     cursor: pointer;
   }
@@ -370,9 +370,9 @@ export const Icon = styled.div`
 
 export const Button = styled.div`
   margin-top: 25px;
-  margin-left: 30px;
-  width: 85%;
-  height: 30px;
+  margin-left: 10px;
+  width: 95%;
+  height: 50px;
   flex-shrink: 0;
   border-radius: 5px;
   border: 1px solid #edd719;
@@ -381,7 +381,7 @@ export const Button = styled.div`
 `;
 
 export const ButtonText = styled.div`
-  margin-top: 5px;
+  margin-top: 15px;
   color: #000;
   text-align: center;
   font-family: "Gothic A1";
@@ -442,19 +442,20 @@ export const SelectedItem = styled.li`
 
 // 드롭다운 메뉴 스타일
 export const Backdrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 393px;
+  height: 1000px;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
+  transform: translate(-50%, -50%);
 `;
 
 export const DropdownMenu = styled.div`
-  position: fixed; /* 헤더 기준으로 고정 */
-  top: 80px; /* 헤더 바로 아래에 위치 */
-  left: 70%;
+  position: absolute;
+  top: 80px;
+  left: 80%;
   transform: translateX(-50%);
   width: 50px;
   height: 314px;
@@ -462,7 +463,7 @@ export const DropdownMenu = styled.div`
   background: #fff;
   box-shadow: 0px 0px 8px 8px #544c4c;
   padding: 20px;
-  z-index: 11; /* 백드롭보다 위에 표시 */
+  z-index: 11;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -497,7 +498,5 @@ export const DropdownItem = styled.button`
   text-align: center;
   border-radius: 50%;
   transition: background-color 0.3s ease;
-
-
 `;
 

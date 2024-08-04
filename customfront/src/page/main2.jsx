@@ -7,7 +7,7 @@ const Main2 = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
-  const [userError, setUserError] = useState(null); // 사용자 정보 에러 상태 추가
+  const [userError, setUserError] = useState(null);
 
   const goMypage = () => {
     navigate(`/Mypage`);
@@ -36,23 +36,35 @@ const Main2 = () => {
   // 사용자 정보를 가져오는 함수
   const fetchUserInfo = async () => {
     try {
-      const token = localStorage.getItem('token'); // 로그인 후 저장된 토큰을 가져옵니다.
+      const token = localStorage.getItem("token"); // 로그인 후 저장된 토큰을 가져옵니다.
       if (!token) {
-        throw new Error('로그인 토큰이 없습니다.');
+        throw new Error("로그인 토큰이 없습니다.");
       }
 
-      const response = await axios.get('http://127.0.0.1:8000/myPage/profile', {
+      const response = await axios.get("http://127.0.0.1:8000/myPage/profile", {
         headers: {
-          'Authorization': `Token ${token}`  // Authorization 헤더에 토큰을 포함합니다.
-        }
+          Authorization: `Token ${token}`, // Authorization 헤더에 토큰을 포함합니다.
+        },
       });
 
-      console.log('사용자 정보:', response.data); // 디버그 로그 추가
+      console.log("사용자 정보:", response.data); // 디버그 로그 추가
       setUserInfo(response.data);
     } catch (error) {
-      console.error('사용자 정보 가져오기 오류:', error.message);
+      console.error("사용자 정보 가져오기 오류:", error.message);
       setUserError(error.message); // 에러 메시지 설정
     }
+  };
+
+  const diseaseMapping = {
+    diabetes: "당뇨",
+    obesity: "비만",
+    muscle_loss: "근손실",
+    hypertension: "고혈압",
+  };
+
+  // 사용자 정보에서 질병 이름을 변환
+  const getDiseaseName = (diseaseKey) => {
+    return diseaseMapping[diseaseKey] || diseaseKey;
   };
 
   // 컴포넌트가 마운트될 때 사용자 정보를 가져옵니다.
@@ -67,7 +79,7 @@ const Main2 = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [cartError, setCartError] = useState(null); 
+  const [cartError, setCartError] = useState(null);
 
   const axiosInstance = axios.create({
     baseURL: "http://127.0.0.1:8000/",
@@ -112,7 +124,9 @@ const Main2 = () => {
 
       try {
         await removeFromCart(item.product_id);
-        console.log(`상품 ID ${item.product_id}이(가) 카트에서 삭제되었습니다.`);
+        console.log(
+          `상품 ID ${item.product_id}이(가) 카트에서 삭제되었습니다.`
+        );
       } catch (error) {
         console.error("카트에서 삭제 중 오류 발생:", error.message);
         setError(error);
@@ -280,7 +294,7 @@ const Main2 = () => {
       const cartResponse = await axiosInstance.get("customFit/cart/");
       if (cartResponse.data.length === 0) {
         setCartError("상품을 추가한 후 비교해 주세요.");
-        return; 
+        return;
       }
 
       const response = await axiosInstance.get("customFit/compare/");
@@ -299,12 +313,23 @@ const Main2 = () => {
   };
 
   const handleLogout = () => {
-    // 여기서 로그아웃 관련 상태 관리 또는 API 호출
-    // 예를 들어, `localStorage`에서 사용자 정보를 제거합니다.
-    localStorage.removeItem('user'); // 사용자의 로그인 상태 정보 제거
+    // 로컬 저장소에서 사용자 정보를 제거합니다.
+    localStorage.removeItem("user");
+
+    // 세션 저장소에서 사용자 정보를 제거합니다.
+    sessionStorage.removeItem("user");
+
+    // 쿠키 제거 (필요한 경우)
+    document.cookie.split(";").forEach((c) => {
+      document.cookie = c
+        .trim()
+        .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+    });
 
     console.log("로그아웃 성공");
-    navigate('/Login'); // 로그인 페이지로 이동
+
+    // 로그인 페이지로 리디렉션합니다.
+    navigate("/Login");
   };
 
   if (loading) {
@@ -315,7 +340,8 @@ const Main2 = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  if (userError) { // 사용자 정보 에러가 있는 경우
+  if (userError) {
+    // 사용자 정보 에러가 있는 경우
     return <div>Error: {userError}</div>;
   }
 
@@ -420,7 +446,12 @@ const Main2 = () => {
                 onClick={toggleMenu}
               />
             </l.DropdownItem>
-            <l.DropdownItem onClick={() => { handleLogout(); toggleMenu(); }}>
+            <l.DropdownItem
+              onClick={() => {
+                handleLogout();
+                toggleMenu();
+              }}
+            >
               <img
                 id="logout"
                 src={`${process.env.PUBLIC_URL}/logo/logout.svg`}
@@ -437,14 +468,12 @@ const Main2 = () => {
       )}
 
       <l.Top>
-       {userInfo.first_name}님에게 맞는 <br />
+        {userInfo.first_name}님에게 맞는 <br />
         식품을 찾아볼까요?
       </l.Top>
 
       <l.Keyword>
-        <l.SmallBox>#당뇨</l.SmallBox>
-        <l.SmallBox>#체중감소</l.SmallBox>
-        <l.SmallBox>#단백질이 좋아</l.SmallBox>
+        <l.SmallBox>#{getDiseaseName(userInfo.disease)}</l.SmallBox>
       </l.Keyword>
 
       <l.InputBlank>
@@ -538,7 +567,9 @@ const Main2 = () => {
         <l.Button onClick={handleCompare}>
           <l.ButtonText>비교하기</l.ButtonText>
         </l.Button>
-        {cartError && <div style={{ color: "red", marginTop: "10px" }}>{cartError}</div>}
+        {cartError && (
+          <div style={{ color: "red", marginTop: "10px" }}>{cartError}</div>
+        )}
       </l.Body>
     </l.Container>
   );

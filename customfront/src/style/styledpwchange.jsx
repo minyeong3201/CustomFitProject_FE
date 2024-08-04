@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: relative;
   margin: 0 auto;
   width: 393px;
-  height: 924px;
+  height: 852px;
   margin-top: 0px;
   background: #fff;
 `;
@@ -44,18 +44,6 @@ export const Border = styled.div`
   padding-bottom: 2px;
 `;
 
-export const Top = styled.div`
-  text-align: left;
-  padding-left: 25px;
-  padding-top: 80px;
-  color: #000;
-  font-family: "Gothic A1";
-  font-size: 25px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-`;
-
 export const Name = styled.div`
   text-align: left;
   position: absolute;
@@ -68,7 +56,6 @@ export const Name = styled.div`
   font-weight: 700;
   line-height: normal;
 `;
-
 
 export const Kit = styled.div`
   top: 255px;
@@ -84,84 +71,75 @@ export const Kit = styled.div`
 `;
 
 export const Check = styled.div`
-  top: 292px;
+  top: 250px;
   left: 38px;
   position: absolute;
   color: #000;
   font-family: "Gothic A1";
   font-size: 13px;
   font-style: normal;
-  font-weight: 300;
-  line-height: 150%; /* 19.5px */
+  font-weight: 400;
+  line-height: 150%;
   letter-spacing: -0.143px;
 `;
-
 
 export const Body = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
   width: 393px;
   height: 275px;
   flex-shrink: 0;
-  background: #FFF9C2;
-`;
-
-export const Text = styled.div`
-  margin-top: 15px;
-  margin-bottom: 15px;
-  width: 308px;
-  height: 20px;
-  flex-shrink: 0;
-  color: #000;
-  font-family: "Gothic A1";
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 150%; /* 22.5px */
-  letter-spacing: -0.165px;
+  background: #fff;
 `;
 
 export const Box = styled.div`
   margin-top: 10px;
   margin-left: 30px;
   width: 345px;
-  height: 50px; 
+  height: 50px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: #FFF;
+  background: #fff;
   box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.25);
   cursor: pointer;
 `;
 
 export const Button = styled.div`
-`;
-
-export const ButtonImage = styled.div`
-  top:28px;
-  left:113px;
-  postion: absolute;
+  margin-top: 15px;
+  margin-left: 43px;
+  width: 328px;
+  height: 45px;
+  box-shadow: 0px 0px 4px 2px rgba(76, 75, 75, 0.25);
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  background: #fff9c2;
+  width: 315px;
+  height: 59.009px;
+  flex-shrink: 0;
 `;
 
 export const ButtonText = styled.div`
-  margin-top: 31px;
+  display: flex;
+  position: relative;
   color: #000;
   text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
   font-family: "Gothic A1";
   font-size: 15px;
   font-style: normal;
-  font-weight: 400;
-  line-height: 150%; /* 22.5px */
-  letter-spacing: -0.165px;
-  cursor: pointer;
+  font-weight: 550;
+  line-height: normal;
 `;
 
 export const InputBlank = styled.div`
-  margin-top: 7px;
-  margin-left: 30px;
+  margin-top: 50px;
+  margin-left: 42px;
   margin-bottom: 20px;
-  width: 328px;
-  height: 50px;
+  width: 315px;
+  height: 60px;
   flex-shrink: 0;
   border-radius: 10px;
   background: #fff;
@@ -170,11 +148,11 @@ export const InputBlank = styled.div`
     border: none;
     outline: none;
     width: 273px;
-    margin-top: 15px;
-    margin-left: -30px;
+    margin-top: 18px;
+    margin-left: -15px;
     color: #000;
     font-family: "Gothic A1";
-    font-size: 13px;
+    font-size: 15px;
     font-style: normal;
     font-weight: 250;
     line-height: 150%; /* 19.5px */
@@ -185,10 +163,11 @@ export const InputBlank = styled.div`
 
 export const Label = styled.div`
   display: flex;
-  margin-top: 15px;
-  margin-left: 15px;
+  position: relative;
+  margin-top: 220px;
+  margin-left: 20px;
   color: #000;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   padding-left: 20px;
 `;

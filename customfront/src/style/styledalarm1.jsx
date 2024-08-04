@@ -12,30 +12,31 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   position: fixed;
-  top: 0; /* 페이지의 최상단에 고정 */
+  top: 0;
   left: 50%;
-  transform: translateX(-50%); /* 화면 가운데로 고정 */
+  transform: translateX(-50%);
   background: #fff;
   width: 393px;
   height: 50px;
-  z-index: 10; /* 백드롭과 메뉴보다 위에 표시되도록 */
+  z-index: 10;
 
   #back {
     cursor: pointer;
   }
   #logo {
-    display: absolute;
+    position: absolute;
     margin-top: 8px;
+    margin-left: -20px;
     cursor: pointer;
   }
   #alarm {
-    display: absolute;
+    position: absolute;
     margin-top: 3px;
     margin-left: 305px;
     cursor: pointer;
   }
   #menu {
-    display: absolute;
+    position: absolute;
     margin-top: 5px;
     margin-left: 343px;
     cursor: pointer;
@@ -47,6 +48,7 @@ export const Border = styled.div`
   border-bottom: 1.5px solid black;
   width: 393px;
   padding-bottom: 2px;
+  margin-top: 48px;
 `;
 
 export const Top = styled.div`
@@ -72,7 +74,7 @@ export const Keywordd = styled.div`
 export const Body = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 50px; /* 헤더의 높이만큼 여백을 줌 */
+  margin-top: 50px;
   width: 393px;
   height: 110px;
 `;
@@ -130,8 +132,8 @@ export const SmallBox5 = styled.div`
   justify-content: flex-start;
   align-items: center;
   text-align: flex-start;
-  span{
-  margin-left: 10px;
+  span {
+    margin-left: 10px;
   }
 `;
 
@@ -146,21 +148,21 @@ export const Button2 = styled.div`
   gap: 15px;
 `;
 
-// 드롭다운 메뉴 스타일
 export const Backdrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 393px;
+  height: 852px;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
+  transform: translate(-50%, -50%);
 `;
 
 export const DropdownMenu = styled.div`
-  position: fixed; /* 헤더 기준으로 고정 */
-  top: 80px; /* 헤더 바로 아래에 위치 */
-  left: 70%;
+  position: absolute;
+  top: 80px;
+  left: 80%;
   transform: translateX(-50%);
   width: 50px;
   height: 314px;
@@ -168,7 +170,7 @@ export const DropdownMenu = styled.div`
   background: #fff;
   box-shadow: 0px 0px 8px 8px #544c4c;
   padding: 20px;
-  z-index: 11; /* 백드롭보다 위에 표시 */
+  z-index: 11;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -203,6 +205,4 @@ export const DropdownItem = styled.button`
   text-align: center;
   border-radius: 50%;
   transition: background-color 0.3s ease;
-
-
 `;

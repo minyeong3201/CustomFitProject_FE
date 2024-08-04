@@ -57,7 +57,7 @@ export const Top = styled.div`
 
 export const Keywordd = styled.div`
   margin-left: 20px;
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 `;
@@ -89,6 +89,7 @@ export const Box = styled.div`
   align-items: center;
   text-align: center;
   margin-top: 5px;
+  margin-bottom: -113px;
   width: 393px;
   height: 182px;
   flex-shrink: 0;
@@ -122,16 +123,29 @@ export const SmallBox5 = styled.div`
   justify-content: flex-start;
   align-items: center;
   text-align: flex-start;
-  span{
-  margin-left: 10px;
+  span {
+    margin-left: 10px;
   }
 `;
 
 export const Click = styled.div`
-  position: absolute; 
-  right: 2px; 
+  position: absolute;
+  right: 2px;
   top: 3px;
-  cursor: pointer; 
+  cursor: pointer;
+
+  #review-image {
+    width: 45px;
+    margin-top: ${({ type }) =>
+      type === "bad" ? "-8px" : "0px"}; /* 'bad'일 때 위로 이동 */
+    margin-right: ${({ type }) =>
+      type === "bad" ? "-9px" : "0px"}; /* 'bad'일 때 오른쪽으로 이동 */
+    ${({ type }) =>
+      type === "bad" &&
+      `
+      width: 65px; /* 'bad'일 때 크기 조절 */
+    `}
+  }
 `;
 
 export const Button2 = styled.div`
@@ -147,9 +161,10 @@ export const Button2 = styled.div`
 
 export const Button = styled.div`
   margin-top: 100px;
-  margin-left: 30px;
-  width: 85%;
-  height: 30px;
+  margin-left: 50px;
+  width: 298px;
+  height: 39px;
+  flex-shrink: 0;
   flex-shrink: 0;
   border-radius: 10px;
   border: 0.5px solid #fff9c2;
@@ -159,7 +174,7 @@ export const Button = styled.div`
 `;
 
 export const ButtonText = styled.div`
-  margin-top: 5px;
+  margin-top: 9px;
   color: #000;
   text-align: center;
   font-family: "Gothic A1";
@@ -167,4 +182,69 @@ export const ButtonText = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+`;
+
+export const ReviewImage = styled.img`
+  width: ${({ type }) =>
+    type === "bad" ? "65px" : "60px"}; /* bad 이미지 크기 키움 */
+`;
+
+//메뉴바 스타일
+export const Backdrop = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 393px;
+  height: 100%;;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  transform: translate(-50%, -50%);
+`;
+
+export const DropdownMenu = styled.div`
+  position: absolute;
+  top: 80px;
+  left: 80%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 314px;
+  border-radius: 50px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 8px #544c4c;
+  padding: 20px;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  #mypage {
+    margin-top: 15px;
+    margin-right: 7px;
+  }
+  #myreview {
+    margin-top: 107px;
+    margin-right: 7px;
+  }
+  #mainpage {
+    margin-top: 200px;
+    margin-right: 7px;
+  }
+  #logout {
+    margin-top: 2px;
+    margin-right: 2px;
+  }
+`;
+
+export const DropdownItem = styled.button`
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  width: 100%;
+  text-align: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
 `;

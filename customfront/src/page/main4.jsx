@@ -9,8 +9,6 @@ const Main4 = () => {
     navigate(`/`);
   };
 
-
-
   return (
     <u.Container>
       <u.Header>

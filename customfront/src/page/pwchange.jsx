@@ -5,6 +5,10 @@ import * as p from "../style/styledpwchange";
 const Pwchange = () => {
   const navigate = useNavigate();
 
+  const goPwchange1 = () => {
+    navigate(`/Pwchange1`);
+  };
+
   return (
     <p.Container>
       <p.Header>
@@ -20,50 +24,19 @@ const Pwchange = () => {
           }}
           onClick={() => navigate(-1)}
         />
-        <img
-          id="logo"
-          src={`${process.env.PUBLIC_URL}/logo/ylogo.svg`}
-          alt="logo"
-          width="40px"
-        />
-        <img
-          id="alarm"
-          src={`${process.env.PUBLIC_URL}/logo/alarm.svg`}
-          alt="alarm button"
-          style={{
-            position: "absolute",
-            top: "8px",
-            left: "8px",
-            cursor: "pointer",
-          }}
-          onClick={() => navigate(-1)}
-        />
-        <img
-          id="menu"
-          src={`${process.env.PUBLIC_URL}/logo/menu.svg`}
-          alt="menu button"
-          style={{
-            position: "absolute",
-            top: "8px",
-            left: "8px",
-            cursor: "pointer",
-          }}
-          onClick={() => navigate(-1)}
-        />
-        <p.Border>
-          <div></div>
-        </p.Border>
       </p.Header>
-
-      <p.Top></p.Top>
+    <p.Body>
+      <p.Label>비밀번호 변경하기</p.Label>
       <p.Check>계정 생성시 사용한 E Mail을 입력해주세요.</p.Check>
-
-      <p.Body>
-        <p.Button>
-          <p.ButtonImage>
-            <img src={`${process.env.PUBLIC_URL}/logo/plus.svg`} alt="icon" />
-          </p.ButtonImage>
-          <p.ButtonText>더 많은 알림 확인하기</p.ButtonText>
+          <p.InputBlank>
+          <input
+              type="email"
+              name="email"
+              placeholder="Email 입력하기"
+            />
+          </p.InputBlank>
+        <p.Button onClick={goPwchange1}>
+          <p.ButtonText>E Mail로 비밀번호 변경 링크 보내기</p.ButtonText>
         </p.Button>
       </p.Body>
     </p.Container>

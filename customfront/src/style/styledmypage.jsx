@@ -4,8 +4,10 @@ export const Container = styled.div`
   position: relative;
   margin: 0 auto;
   width: 393px;
-  height: 924px;
+  height: 885px;
+  margin-top: 0px;
   background: #fff;
+  overflow: ${(props) => (props.isMenuOpen ? "hidden" : "auto")};
 `;
 
 export const Header = styled.div`
@@ -13,23 +15,23 @@ export const Header = styled.div`
   background: #fff;
   width: 393px;
   height: 50px;
-  z-index: 2;
+  z-index: 999;
   #back {
     cursor: pointer;
   }
   #logo {
-    position: absolute;
+    display: absolute;
     margin-top: 8px;
     cursor: pointer;
   }
   #alarm {
-    position: absolute;
+    display: absolute;
     margin-top: 3px;
     margin-left: 305px;
     cursor: pointer;
   }
   #menu {
-    position: absolute;
+    display: absolute;
     margin-top: 5px;
     margin-left: 343px;
     cursor: pointer;
@@ -76,7 +78,7 @@ export const Keyword = styled.div`
   width: 343px;
   height: 105px;
   top: 156px;
-  left: 24px;
+  left: 15px;
   flex-shrink: 0;
   border-radius: 10px;
   background: #FFF9C2;
@@ -84,20 +86,48 @@ export const Keyword = styled.div`
   padding: 10px;
 `;
 
+// 공통 스타일
 export const Small = styled.div`
   padding: 5px 13px;
   flex-shrink: 0;
   border-radius: 30px;
-  background: linear-gradient(180deg, #E1E1E1 0%, #FFFBA6 100%);
+  border: 1px solid #EDD719;
+  background: #FFF;
   font-size: 13px;
   z-index: 2;
 `;
 
-export const SmallOne = styled(Small)``;
-export const SmallTwo = styled(Small)``;
-export const SmallThree = styled(Small)``;
-export const SmallFour = styled(Small)``;
-export const SmallFive = styled(Small)``;
+// 개별 위치 스타일
+export const SmallOne = styled(Small)`
+  position: absolute;
+  top: 1px;  
+  left: 156px; 
+`;
+
+export const SmallTwo = styled(Small)`
+  position: absolute;
+  width: 45px;
+  top: 1px;  
+  left: 260px;
+`;
+
+export const SmallThree = styled(Small)`
+  position: absolute;
+  top: 50px; 
+  left: 20px; 
+`;
+
+export const SmallFour = styled(Small)`
+  position: absolute;
+  top: 50px; 
+  left: 120px; 
+`;
+
+export const SmallFive = styled(Small)`
+  position: absolute;
+  top: 50px; 
+  left: 250px; 
+`;
 
 export const Wrap = styled.div`
   display: flex;
@@ -105,8 +135,8 @@ export const Wrap = styled.div`
   align-items: flex-start; 
   width: 300px;
   height: 40px;
-  top: 174px;
-  left: 175px;
+  top: 20px;
+  left: 5px;
   flex-shrink: 0;
   border-radius: 10px;
   position: absolute;
@@ -118,8 +148,8 @@ export const Wrap2 = styled.div`
   align-items: flex-start; 
   width: 343px;
   height: 40px;
-  top: 174px;
-  left: 175px;
+  top: 20px;
+  left: 5px;
   flex-shrink: 0;
   border-radius: 10px;
   position: absolute;
@@ -146,8 +176,8 @@ export const Check = styled.div`
   background: #F2F2F2;
   padding: 20px 0px 20px 0px;
   text-align: center;
-  margin-top: 13px;
-  margin-left: 24px;
+  margin-top: 25px;
+  margin-left: 20px;
   font-family: "Gothic A1";
   font-size: 15px;
   font-style: normal;
@@ -163,8 +193,8 @@ export const Write = styled.div`
   background: linear-gradient(90deg, rgba(190, 255, 224, 0.45) 0%, #FFF9C2 100%);
   padding: 20px 0px 20px 0px;
   text-align: center;
-  top: 503px;
-  left: 204px;
+  top: 515px;
+  left: 210px;
   position: absolute;
   font-family: "Gothic A1";
   font-size: 15px;
@@ -186,6 +216,7 @@ export const Body = styled.div`
 export const Text = styled.div`
   margin-top: 15px;
   margin-bottom: 15px;
+  margin-left: -18px;
   width: 308px;
   height: 20px;
   flex-shrink: 0;
@@ -194,7 +225,7 @@ export const Text = styled.div`
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
-  line-height: 150%; /* 22.5px */
+  line-height: 150%; 
   letter-spacing: -0.165px;
 `;
 
@@ -208,8 +239,8 @@ export const Box = styled.div`
   background: #FFF;
   box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.25);
   text-align: left;
-  display: flex; /* 자식 요소를 수평으로 정렬하기 위해 flex 사용 */
-  align-items: center; /* 수직 가운데 정렬 */
+  display: flex; 
+  align-items: center; 
   padding-left: 15px;
   cursor: pointer;
 `;
@@ -235,4 +266,65 @@ export const ButtonText = styled.div`
   line-height: 150%; /* 22.5px */
   letter-spacing: -0.165px;
   cursor: pointer;
+`;
+
+export const Backdrop = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 393px;
+  height: 910px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  scrollbar-width: none;
+  background-color: none;
+`;
+
+export const DropdownMenu = styled.div`
+  position: absolute;
+  top: 80px;
+  left: 80%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 314px;
+  border-radius: 50px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 8px #544c4c;
+  padding: 20px;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  #mypage {
+    margin-top: 15px;
+    margin-right: 7px;
+  }
+  #myreview {
+    margin-top: 107px;
+    margin-right: 7px;
+  }
+  #mainpage {
+    margin-top: 200px;
+    margin-right: 7px;
+  }
+  #logout {
+    margin-top: 2px;
+    margin-right: 2px;
+  }
+`;
+
+export const DropdownItem = styled.button`
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  width: 100%;
+  text-align: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
 `;

@@ -1,97 +1,113 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import * as b from "../style/styledinfo1";
-
-axios.defaults.withCredentials = true;
+import * as ii from "../style/styledinfo1";
 
 const Info1 = () => {
   const navigate = useNavigate();
-  const [selectedBox, setSelectedBox] = useState(null);
-  const [errors, setErrors] = useState(null);
-
-  const ageRanges = [
-    { label: "19세 이하", value: "under_19" },
-    { label: "20~29세", value: "20-29" },
-    { label: "30~39세", value: "30-39" },
-    { label: "40~49세", value: "40-49" },
-    { label: "50~59세", value: "50-59" },
-    { label: "60~69세", value: "60-69" },
-    { label: "70세 이상", value: "over_70" },
-  ];
-
-  const handleBoxClick = (index) => {
-    setSelectedBox(index);
-  };
-
+  const [selectedBox, setSelectedBox] = useState(null); // 클릭된 박스의 인덱스를 관리
+  const [userInfo, setUserInfo] = useState(null); // 사용자 정보를 관리
+  const [userError, setUserError] = useState(null); // 사용자 정보 에러를 관리
+  const [loading, setLoading] = useState(false); // 로딩 상태를 관리
+  const [apiError, setApiError] = useState(null); // API 에러를 관리
+  
   useEffect(() => {
-    const getSessionData = async () => {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/register/session/"
-        );
-        const { session_data } = response.data;
-        console.log("Current session data:", session_data);
-        const { age } = session_data;
-        if (age) {
-          const index = ageRanges.map((a) => a.value).indexOf(age);
-          setSelectedBox(index);
-        }
-      } catch (error) {
-        console.error("Error fetching session data:", error);
-      }
-    };
-
-    getSessionData();
+    fetchUserInfo(); // 컴포넌트가 마운트될 때 사용자 정보를 가져오는 함수 호출
   }, []);
 
-  const onSubmit = async () => {
-    if (selectedBox === null) {
-      setErrors("연령대를 선택해 주세요.");
-      return;
-    }
+  const goInfo2 = () => {
+    navigate(`/Info2`);
+  };
 
-    const age = ageRanges[selectedBox].value;
-
+  // 사용자 정보를 가져오는 함수
+  const fetchUserInfo = async () => {
+    setLoading(true); // 로딩 시작
     try {
-      const csrfToken = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("csrftoken="))
-        ?.split("=")[1];
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": csrfToken,
-        },
-      };
-
-      const body = JSON.stringify({ age });
-
-      const res = await axios.put(
-        "http://127.0.0.1:8000/register/step2/",
-        body,
-        config,
-        { withCredentials: true }
-      );
-      console.log("회원가입 2단계 성공:", res.data);
-      console.log("Updated session data:", res.data.session_data);
-      navigate("/info2");
-    } catch (err) {
-      if (err.response && err.response.data) {
-        const serverErrors = err.response.data;
-        setErrors(serverErrors.detail ? serverErrors.detail : serverErrors);
-      } else {
-        console.error("Error during axios request:", err);
+      const token = localStorage.getItem('token'); // 로그인 후 저장된 토큰을 가져옵니다.
+      if (!token) {
+        throw new Error('로그인 토큰이 없습니다.');
       }
+
+      const response = await axios.get('http://127.0.0.1:8000/myPage/profile', {
+        headers: {
+          'Authorization': `Token ${token}`  // Authorization 헤더에 토큰을 포함합니다.
+        }
+      });
+
+      console.log('사용자 정보:', response.data); // 디버그 로그 추가
+      setUserInfo(response.data); // 사용자 정보 저장
+    } catch (error) {
+      console.error('사용자 정보 가져오기 오류:', error.message);
+      setUserError(error.message); // 에러 메시지 설정
+    } finally {
+      setLoading(false); // 로딩 종료
     }
   };
 
+  // 연령대를 업데이트하는 함수
+  const updateAge = async (ageRange) => {
+    setLoading(true); // 로딩 시작
+    try {
+      const token = localStorage.getItem('token'); // 로그인 후 저장된 토큰을 가져옵니다.
+      if (!token) {
+        throw new Error('로그인 토큰이 없습니다.');
+      }
+
+      const response = await axios.put('http://127.0.0.1:8000/myPage/update/age/', 
+      { age: ageRange },
+      {
+        headers: {
+          'Authorization': `Token ${token}`,  // Authorization 헤더에 토큰을 포함합니다.
+          'Content-Type': 'application/json'
+        }
+      });
+
+      console.log('나이 업데이트 성공:', response.data); // 디버그 로그 추가
+      // 여기서 추가적인 상태 업데이트나 화면 전환을 수행할 수 있습니다.
+    } catch (error) {
+      console.error('나이 업데이트 오류:', error.message);
+      setApiError(error.message); // 에러 메시지 설정
+    } finally {
+      setLoading(false); // 로딩 종료
+    }
+  };
+
+  // 클릭된 박스의 상태를 업데이트하는 함수
+  const handleBoxClick = (index) => {
+    setSelectedBox(index); // 클릭된 박스의 인덱스를 상태로 저장
+    const ageRanges = [
+      'under_19', 
+      '20-29', 
+      '30-39',
+      '40-49',
+      '50-59',
+      '60-69',
+      'over_70',
+    ];
+    updateAge(ageRanges[index]); // 선택된 연령대로 업데이트
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (userError) { // 사용자 정보 에러가 있는 경우
+    return <div>Error: {userError}</div>;
+  }
+
+  if (!userInfo) {
+    return <div>Loading...</div>;
+  }
+
+  if (apiError) { // API 에러가 있는 경우
+    return <div>Error: {apiError}</div>;
+  }
+
   return (
-    <b.Container>
-      <b.Header>
+    <ii.Container>
+      <ii.Header>
         <img
-          id="back2"
+          id="back"
           src={`${process.env.PUBLIC_URL}/logo/backbtn2.svg`}
           alt="back button"
           style={{
@@ -102,10 +118,10 @@ const Info1 = () => {
           }}
           onClick={() => navigate(-1)}
         />
-      </b.Header>
+      </ii.Header>
 
-      <b.Ybox>
-        <b.Top>
+      <ii.Ybox>
+        <ii.Top>
           나에게{" "}
           <span style={{ fontWeight: "bold", fontSize: "20px" }}>
             딱 맞는 맞춤 비교
@@ -116,51 +132,51 @@ const Info1 = () => {
             키워드 선택
           </span>
           을 진행해 주세요!
-          <br />
-          <span
-            style={{ fontWeight: "400", fontSize: "12px", color: "#ED4C19" }}
-          >
-            키워드 선택이 완료되어야 다음 단계로 이동이 가능합니다.
-          </span>
-        </b.Top>
+        </ii.Top>
 
-        <b.Text>
+        <ii.Text>
           <br />
           <br />
           🔴 <span>연령대</span>를 선택해 주세요.
-        </b.Text>
-      </b.Ybox>
+        </ii.Text>
+      </ii.Ybox>
 
-      <b.Body>
-        <b.Box>
-          <b.Box2>
-            {ageRanges.map((ageRange, index) => (
-              <b.Keywordd key={index}>
-                <b.SmallBox5
-                  $isclicked={selectedBox === index}
-                  onClick={() => handleBoxClick(index)}
+      <ii.Body>
+        <ii.Box>
+          <ii.Box2>
+            {[
+              "19세 이하", 
+              "20-29세", 
+              "30-39세",
+              "40-49세",
+              "50-59세",
+              "60-69세",
+              "70세 이상",
+            ].map((ageRange, index) => (
+              <ii.Keywordd key={index}>
+                <ii.SmallBox5
+                  isClicked={selectedBox === index} // 클릭 상태에 따라 스타일 적용
+                  onClick={() => handleBoxClick(index)} // 클릭 시 상태 업데이트
                 >
                   <span style={{ fontWeight: "500", fontSize: "15px" }}>
-                    {ageRange.label}
+                    {ageRange}
                   </span>
-                </b.SmallBox5>
-              </b.Keywordd>
+                </ii.SmallBox5>
+              </ii.Keywordd>
             ))}
-          </b.Box2>
-        </b.Box>
+          </ii.Box2>
+        </ii.Box>
 
-        {errors && <div style={{ color: "red" }}>{errors}</div>}
-
-        <b.Button>
+        <ii.Button>
           <img
-            id="next"
+            id="restore"
             src={`${process.env.PUBLIC_URL}/logo/next.svg`}
-            alt="next"
-            onClick={onSubmit}
+            alt="restore"
+            onClick={goInfo2}
           />
-        </b.Button>
-      </b.Body>
-    </b.Container>
+        </ii.Button>
+      </ii.Body>
+    </ii.Container>
   );
 };
 

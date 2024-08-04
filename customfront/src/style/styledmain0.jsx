@@ -97,12 +97,7 @@ export const InputBlank = styled.div`
     font-weight: 300;
     line-height: normal;
   }
-
-  #ylogo {
-    margin-left: 10px;
-  }
 `;
-
 
 export const SmallBox2 = styled.div`
   display: inline-flex;
@@ -142,10 +137,10 @@ export const Body = styled.div`
 export const Box2 = styled.div`
   display: flex;
   flex-direction: row;
-  width: 370px;
+  width: 375px;
   height: 500px;
   gap: 7px;
-  margin-left: -205px;
+  margin-left: -195px;
   overflow-y: auto;
   scrollbar-width: none;
   background-color: none;
@@ -185,16 +180,126 @@ export const Box = styled.div`
 
 export const Button = styled.div`
   position: absolute;
-  top: 724px;
-  left: 13px;
+  top: 200px;
+  left: 30px;
   flex-shrink: 0;
   cursor: pointer;
 `;
 
 export const Buttontwo = styled.div`
   position: absolute;
-  top: 724px;
+  top: 660px;
   left: 205px;
   flex-shrink: 0;
   cursor: pointer;
+`;
+
+export const News = styled.div`
+  display: flex;
+  margin-top: 20px;
+  flex-direction: row;
+  width: 372px;
+  height: 350px; 
+  gap: 7px; 
+  overflow-x: auto; 
+  overflow-y: hidden;
+  scrollbar-width: none; 
+  background-color: transparent; 
+  border: none;
+
+  &::-webkit-scrollbar {
+    display: none; 
+  }
+`;
+
+export const Card = styled.div`
+  position: relative;
+  margin-left: 5px;
+  margin-top: 10px;
+  flex-shrink: 0;
+  width: 100%; 
+  height: 330px; 
+  display: flex; 
+  gap: 15px; 
+  img {
+    width: 100%; 
+    height: 100%; 
+  }
+`;
+
+export const Button2 = styled.div`
+  position: relative;
+  margin-top: 10px;
+  margin-left: -190px;
+  cursor: pointer;
+`;
+
+export const Button2Text = styled.div`
+  margin-top: 12px;
+  color: #fff;
+  text-align: center;
+  font-family: "Gothic A1";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+`;
+
+export const Backdrop = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 393px;
+  height: 852px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  transform: translate(-50%, -50%);
+`;
+
+export const DropdownMenu = styled.div`
+  position: absolute;
+  top: 80px;
+  left: 80%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 314px;
+  border-radius: 50px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 8px #544c4c;
+  padding: 20px;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  #mypage {
+    margin-top: 15px;
+    margin-right: 7px;
+  }
+  #myreview {
+    margin-top: 107px;
+    margin-right: 7px;
+  }
+  #mainpage {
+    margin-top: 200px;
+    margin-right: 7px;
+  }
+  #logout {
+    margin-top: 2px;
+    margin-right: 2px;
+  }
+`;
+
+export const DropdownItem = styled.button`
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  width: 100%;
+  text-align: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
 `;

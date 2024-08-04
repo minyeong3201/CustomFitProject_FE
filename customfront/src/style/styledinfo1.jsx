@@ -15,10 +15,33 @@ export const Header = styled.div`
   width: 393px;
   height: 50px;
   z-index: 2;
-  #back2 {
-    margin-top: 5px;
+  #back {
     cursor: pointer;
   }
+  #logo {
+    display: absolute;
+    margin-top: 8px;
+    cursor: pointer;
+  }
+  #alarm {
+    display: absolute;
+    margin-top: 3px;
+    margin-left: 305px;
+    cursor: pointer;
+  }
+  #menu {
+    display: absolute;
+    margin-top: 5px;
+    margin-left: 343px;
+    cursor: pointer;
+  }
+`;
+
+export const Border = styled.div`
+  position: fixed;
+  border-bottom: 2px solid black;
+  width: 393px;
+  padding-bottom: 2px;
 `;
 
 export const Ybox = styled.div`
@@ -110,13 +133,13 @@ export const SmallBox5 = styled.div`
   flex-shrink: 0;
   border-radius: 15px;
   border: 0.3px solid #000;
-  background: ${(props) => (props.$isclicked ? "#fffba6" : "#fff")};
+  background: ${(props) => (props.isClicked ? "#fffba6" : "#fff")};
   justify-content: center;
   align-items: center;
   text-align: center;
   cursor: pointer;
   filter: ${(props) =>
-    props.$isclicked ? "drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25))" : "none"};
+    props.isClicked ? "drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25))" : "none"};
   transition: all 0.1s ease;
   span {
     margin-left: 10px;
@@ -126,15 +149,4 @@ export const SmallBox5 = styled.div`
 export const Button = styled.div`
   margin-top: 15px;
   cursor: pointer;
-`;
-
-export const ButtonText = styled.div`
-  margin-top: 12px;
-  color: #fff;
-  text-align: center;
-  font-family: "Gothic A1";
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
 `;

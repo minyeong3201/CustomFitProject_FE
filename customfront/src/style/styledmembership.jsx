@@ -5,12 +5,12 @@ export const Container = styled.div`
   margin: 0 auto;
   width: 393px;
   height: 1100px;
-  background: pink;
+  background: #fff;
 `;
 
 export const Header = styled.div`
   #logo {
-    position: absolute; /* 수정된 부분 */
+    position: absolute; 
     margin-right: -330px;
     margin-top: 3px;
   }
@@ -64,9 +64,9 @@ export const Label2 = styled.div`
 `;
 
 export const InputBlank = styled.div`
-  margin-top: 7px;
+  margin-top: 13px;
   margin-left: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   width: 328px;
   height: 50px;
   flex-shrink: 0;
@@ -112,10 +112,10 @@ export const Bottom = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
-  margin-top: 10px;
+  margin-top: 15px;
   margin-left: 30px;
   width: 330px;
-  height: 190px;
+  height: 180px;
   flex-shrink: 0;
   border-radius: 10px;
   border: 0.3px solid #000;
@@ -127,8 +127,9 @@ export const BottomText = styled.div`
   align-items: center;
   text-align: left;
   background: none;
-  margin-bottom: 30px;
-  margin-left: 25px;
+  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-left: 20px;
 
   input {
     position: relative; 
@@ -148,7 +149,7 @@ export const Button = styled.button`
   border: none;
 `;
 
-export const ButtonText = styled.div`
+export const Text = styled.div`
   display: flex;
   position: relative;
   color: #000;
@@ -156,8 +157,16 @@ export const ButtonText = styled.div`
   align-items: center;
   justify-content: center;
   font-family: "Gothic A1";
-  font-size: 18px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 550;
   line-height: normal;
 `;
+
+export const Error = styled.div`
+  color: red;
+  font-size: 2px;
+  margin-top: 0.5rem;
+`;
+
+

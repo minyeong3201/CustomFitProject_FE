@@ -140,7 +140,7 @@ export const News = styled.div`
   display: flex;
   margin-top: 20px;
   flex-direction: row;
-  width: 340px;
+  width: 385px;
   height: 350px; 
   gap: 7px; 
   overflow-x: auto; 
@@ -156,7 +156,7 @@ export const News = styled.div`
 
 export const Card = styled.div`
   position: relative;
-  margin-left: 5px;
+  margin-left: 18px;
   margin-top: 10px;
   flex-shrink: 0;
   width: 100%; 

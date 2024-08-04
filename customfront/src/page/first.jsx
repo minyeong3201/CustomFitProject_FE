@@ -5,8 +5,8 @@ import * as f1 from "../style/styledfirst";
 const First = () => {
   const navigate = useNavigate();
 
-  const goMain = () => {
-    navigate(`/Main`);
+  const goLogin = () => {
+    navigate(`/Login`);
   };
 
   const LottiePlayer = () => {
@@ -86,7 +86,7 @@ const First = () => {
         </f1.Box>
         <f1.Box2></f1.Box2>
 
-        <f1.Button onClick={goMain}>
+        <f1.Button onClick={goLogin}>
           <f1.ButtonText>서비스 이용하기</f1.ButtonText>
           <img
             id="down"
@@ -164,7 +164,7 @@ const First = () => {
             />
           </f1.Card>
         </f1.News>
-        <f1.Bottom onClick={goMain}>
+        <f1.Bottom onClick={goLogin}>
           <f1.BottomText>
             🔥로그인 / 회원가입하고 모든 서비스 이용하기
           </f1.BottomText>

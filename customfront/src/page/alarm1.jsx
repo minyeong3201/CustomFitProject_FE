@@ -6,15 +6,23 @@ const Alarm1 = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const goMain = () => {
+  const goMain0 = () => {
+    navigate(`/Main0`);
+  };
+
+  const goMain2 = () => {
     navigate(`/`);
+  };
+
+  const goAlarm1 = () => {
+    navigate(`/Alarm1`);
   };
 
   const goMypage = () => {
     navigate(`/Mypage`);
   };
 
-  const goMyreview = () => {
+  const goReview = () => {
     navigate(`/Review`);
   };
 
@@ -73,7 +81,7 @@ const Alarm1 = () => {
           src={`${process.env.PUBLIC_URL}/logo/ylogo.svg`}
           alt="logo"
           width="40px"
-          onClick={goMain}
+          onClick={goMain2}
         />
         <img
           id="alarm"
@@ -85,7 +93,7 @@ const Alarm1 = () => {
             left: "8px",
             cursor: "pointer",
           }}
-          onClick={() => navigate(-1)}
+          onClick={goAlarm1}
         />
         <img
           id="menu"
@@ -122,7 +130,7 @@ const Alarm1 = () => {
                 onClick={toggleMenu}
               />
             </q.DropdownItem>
-            <q.DropdownItem onClick={goMyreview}>
+            <q.DropdownItem onClick={goReview}>
               <img
                 id="myreview"
                 src={`${process.env.PUBLIC_URL}/logo/myreview.svg`}
@@ -136,7 +144,7 @@ const Alarm1 = () => {
                 onClick={toggleMenu}
               />
             </q.DropdownItem>
-            <q.DropdownItem onClick={goMain}>
+            <q.DropdownItem onClick={goMain0}>
               <img
                 id="mainpage"
                 src={`${process.env.PUBLIC_URL}/logo/mainpage.svg`}

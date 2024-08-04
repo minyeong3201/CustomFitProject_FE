@@ -5,9 +5,40 @@ import * as v from "../style/styledreviewcheck2";
 
 const Reviewcheck2 = () => {
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { product, review, selectedImage } = location.state || {}; // selectedImage 추가
   const [productData, setProductData] = useState(null);
+
+  const goMain2 = () => {
+    navigate(`/`);
+  };
+
+  const goMain0 = () => {
+    navigate(`/Main0`);
+  };
+
+  const goMypage = () => {
+    navigate(`/Mypage`);
+  };
+
+  const goReview = () => {
+    navigate(`/Review`);
+  };
+
+  const goLogin = () => {
+    navigate(`/Login`);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -39,10 +70,6 @@ const Reviewcheck2 = () => {
 
     fetchProductData();
   }, [product, navigate]);
-
-  const goMain = () => {
-    navigate(`/`);
-  };
 
   const goReviewcheck3 = () => {
     if (product && review) {
@@ -76,7 +103,7 @@ const Reviewcheck2 = () => {
           src={`${process.env.PUBLIC_URL}/logo/ylogo.svg`}
           alt="logo"
           width="40px"
-          onClick={goMain}
+          onClick={goMain2}
         />
         <img
           id="alarm"
@@ -100,12 +127,75 @@ const Reviewcheck2 = () => {
             left: "8px",
             cursor: "pointer",
           }}
-          onClick={() => navigate(-1)}
+          onClick={toggleMenu}
         />
         <v.Border>
           <div></div>
         </v.Border>
       </v.Header>
+
+      {isMenuOpen && (
+        <>
+          <v.Backdrop onClick={closeMenu} />
+          <v.DropdownMenu>
+            <v.DropdownItem onClick={goMypage}>
+              <img
+                id="mypage"
+                src={`${process.env.PUBLIC_URL}/logo/mypage.svg`}
+                alt="mypage"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </v.DropdownItem>
+            <v.DropdownItem onClick={goReview}>
+              <img
+                id="myreview"
+                src={`${process.env.PUBLIC_URL}/logo/myreview.svg`}
+                alt="myreview"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </v.DropdownItem>
+            <v.DropdownItem onClick={goMain0}>
+              <img
+                id="mainpage"
+                src={`${process.env.PUBLIC_URL}/logo/mainpage.svg`}
+                alt="mainpage"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </v.DropdownItem>
+            <v.DropdownItem onClick={goLogin}>
+              <img
+                id="logout"
+                src={`${process.env.PUBLIC_URL}/logo/logout.svg`}
+                alt="logout"
+                style={{
+                  position: "absolute",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </v.DropdownItem>
+          </v.DropdownMenu>
+        </>
+      )}
 
       <v.Ybox>
         <v.Top>[{product.name}]</v.Top>

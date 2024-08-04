@@ -12,6 +12,7 @@ const Main3 = () => {
   const [firstName, setFirstName] = useState(""); // 사용자 이름 상태 추가
   const [userInfo, setUserInfo] = useState(null); // 사용자 정보 상태 추가
   const [userError, setUserError] = useState(null); // 사용자 정보 에러 상태 추가
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     // 로컬 스토리지에서 first_name 가져오기
@@ -48,12 +49,36 @@ const Main3 = () => {
     fetchUserInfo(); // 컴포넌트가 마운트될 때 사용자 정보를 가져옵니다.
   }, []);
 
-  const goMain = () => {
-    navigate(`/`);
+  const goMain0 = () => {
+    navigate(`/Main0`);
   };
 
-  const goReviewcheck3 = () => {
-    navigate(`/Reviewcheck3`);
+  const goAlarm1 = () => {
+    navigate(`/Alarm1`);
+  };
+
+  const goMypage = () => {
+    navigate(`/Mypage`);
+  };
+
+  const goReview = () => {
+    navigate(`/Review`);
+  };
+
+  const goLogin = () => {
+    navigate(`/Login`);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  const goMain2 = () => {
+    navigate(`/`);
   };
 
   const handleStarClick = (value) => {
@@ -114,7 +139,7 @@ const Main3 = () => {
           src={`${process.env.PUBLIC_URL}/logo/ylogo.svg`}
           alt="logo"
           width="40px"
-          onClick={goMain}
+          onClick={goMain2}
         />
         <img
           id="alarm"
@@ -126,7 +151,7 @@ const Main3 = () => {
             left: "8px",
             cursor: "pointer",
           }}
-          onClick={() => navigate(-1)}
+          onClick={goAlarm1}
         />
         <img
           id="menu"
@@ -138,12 +163,75 @@ const Main3 = () => {
             left: "8px",
             cursor: "pointer",
           }}
-          onClick={() => navigate(-1)}
+          onClick={toggleMenu}
         />
         <z.Border>
           <div></div>
         </z.Border>
       </z.Header>
+
+      {isMenuOpen && (
+        <>
+          <z.Backdrop onClick={closeMenu} />
+          <z.DropdownMenu>
+            <z.DropdownItem onClick={goMypage}>
+              <img
+                id="mypage"
+                src={`${process.env.PUBLIC_URL}/logo/mypage.svg`}
+                alt="mypage"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </z.DropdownItem>
+            <z.DropdownItem onClick={goReview}>
+              <img
+                id="myreview"
+                src={`${process.env.PUBLIC_URL}/logo/myreview.svg`}
+                alt="myreview"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </z.DropdownItem>
+            <z.DropdownItem onClick={goMain0}>
+              <img
+                id="mainpage"
+                src={`${process.env.PUBLIC_URL}/logo/mainpage.svg`}
+                alt="mainpage"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </z.DropdownItem>
+            <z.DropdownItem onClick={goLogin}>
+              <img
+                id="logout"
+                src={`${process.env.PUBLIC_URL}/logo/logout.svg`}
+                alt="logout"
+                style={{
+                  position: "absolute",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </z.DropdownItem>
+          </z.DropdownMenu>
+        </>
+      )}
 
       <z.Ybox>
         <z.Top>
@@ -157,7 +245,7 @@ const Main3 = () => {
         <z.Wbox>
           <z.Text>{recommendedProduct?.product_name || "제품명입니다"}</z.Text>
           <z.Stext>{getStextLabel(userInfo.disease)}</z.Stext>
-          <z.Ntext>{recommendedProduct?.protein || "제품명입니다"}g</z.Ntext>
+          <z.Ntext>{recommendedProduct?.protein || "N"}g</z.Ntext>
         </z.Wbox>
         <z.Otext>[{getDiseaseName(userInfo.disease)}] 선택한 다른 회원들의 의견이에요!</z.Otext>
       </z.Ybox>
@@ -166,15 +254,15 @@ const Main3 = () => {
         <z.Button2>
           <img
             id="ylogo"
-            src={`${process.env.PUBLIC_URL}/logo/good2.png`}
+            src={`${process.env.PUBLIC_URL}/logo/good10.svg`}
             alt="logo"
             width="65px"
           />
           <img
             id="ylogo"
-            src={`${process.env.PUBLIC_URL}/logo/bad2.png`}
+            src={`${process.env.PUBLIC_URL}/logo/bad10.svg`}
             alt="logo"
-            width="90px"
+            width="65px"
           />
         </z.Button2>
         <z.Otext>맞춤의 추천 서비스에 만족하시나요?</z.Otext>
@@ -205,7 +293,7 @@ const Main3 = () => {
             />
           ))}
         </z.Star>
-        <z.Button onClick={goReviewcheck3}>
+        <z.Button onClick={goMain2}>
           <z.ButtonText>만족도 결과 보내기</z.ButtonText>
         </z.Button>
       </z.Sbox>

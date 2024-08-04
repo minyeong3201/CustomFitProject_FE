@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as s from "../style/styledmembership";
 
@@ -72,6 +72,7 @@ const Membership = () => {
     e.preventDefault();
     try {
       const csrfToken = getCsrfToken();
+      console.log("CSRF Token:", csrfToken); 
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -87,15 +88,24 @@ const Membership = () => {
         config
       );
       console.log("회원가입 성공:", res.data);
-      console.log("Session cookie:", document.cookie); // 세션 쿠키 확인
-      navigate("/info1");
+      console.log("Session cookie:", document.cookie); 
+
+    
+      const sessionId = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("sessionid="))
+        ?.split("=")[1];
+      const sessionData = { ...formData, sessionId };
+      localStorage.setItem("sessionData", JSON.stringify(sessionData));
+
+      navigate("/logincomplete");
     } catch (err) {
       if (err.response && err.response.data) {
         const serverErrors = err.response.data;
         if (
           serverErrors.username &&
           serverErrors.username.includes(
-            "A user with that username already exists."
+            "이미 사용중인 아이디 입니다."
           )
         ) {
           serverErrors.username = ["중복된 아이디가 있습니다."];
@@ -141,7 +151,7 @@ const Membership = () => {
               required
             />
             {errors.username && (
-              <p style={{ color: "red" }}>{errors.username}</p>
+              <p style={{ color: "red", fontSize:"13px" }}>{errors.username}</p>
             )}
           </s.InputBlank>
 
@@ -156,7 +166,7 @@ const Membership = () => {
               required
             />
             {errors.password && (
-              <p style={{ color: "red" }}>{errors.password}</p>
+              <p style={{ color: "red", fontSize:"13px"}}>{errors.password}</p>
             )}
           </s.InputBlank>
 
@@ -171,7 +181,7 @@ const Membership = () => {
               required
             />
             {errors.password_confirm && (
-              <p style={{ color: "red" }}>{errors.password_confirm}</p>
+              <p style={{ color: "red" , fontSize:"13px"}}>{errors.password_confirm}</p>
             )}
           </s.InputBlank>
 
@@ -186,7 +196,7 @@ const Membership = () => {
               required
             />
             {errors.first_name && (
-              <p style={{ color: "red" }}>{errors.first_name}</p>
+              <p style={{ color: "red", fontSize:"13px" }}>{errors.first_name}</p>
             )}
           </s.InputBlank>
 
@@ -200,7 +210,7 @@ const Membership = () => {
               placeholder="Email을 입력해주세요."
               required
             />
-            {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+            {errors.email && <p style={{ color: "red", fontSize:"13px" }}>{errors.email}</p>}
           </s.InputBlank>
 
           <s.Label>약관</s.Label>
@@ -230,7 +240,7 @@ const Membership = () => {
                 (필수) 개인회원 약관에 동의
               </label>
               {errors.terms_accepted_1 && (
-                <p style={{ color: "red" }}>{errors.terms_accepted_1}</p>
+                <p style={{ color: "red", fontSize:"13px" }}>{errors.terms_accepted_1}</p>
               )}
             </s.BottomText>
 
@@ -251,7 +261,7 @@ const Membership = () => {
                 (필수) 개인정보 수집 및 이용에 동의
               </label>
               {errors.terms_accepted_2 && (
-                <p style={{ color: "red" }}>{errors.terms_accepted_2}</p>
+                <p style={{ color: "red", fontSize:"13px", }}>{errors.terms_accepted_2}</p>
               )}
             </s.BottomText>
 
@@ -266,13 +276,13 @@ const Membership = () => {
                 (선택) 이메일 등 마케팅 정보 수신 동의
               </label>
               {errors.terms_accepted_optional && (
-                <p style={{ color: "red" }}>{errors.terms_accepted_optional}</p>
+                <p style={{ color: "red", fontSize:"13px" }}>{errors.terms_accepted_optional}</p>
               )}
             </s.BottomText>
           </s.Bottom>
 
           <s.Button type="submit" onSubmit={onSubmit}>
-            🔥 회원 정보 저장하고 키워드 선택하기
+            <s.Text>🔥 회원 정보 저장하고 키워드 선택하기</s.Text>
           </s.Button>
         </form>
       </s.Body>

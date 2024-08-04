@@ -14,7 +14,7 @@ export const Header = styled.div`
   background: #fff;
   width: 393px;
   height: 50px;
-  z-index: 2;
+  z-index: 10;
   #back {
     cursor: pointer;
   }
@@ -146,9 +146,10 @@ export const Button2 = styled.div`
 
 export const Button = styled.div`
   margin-top: 100px;
-  margin-left: 30px;
-  width: 85%;
-  height: 30px;
+  margin-left: 50px;
+  width: 298px;
+  height: 39px;
+  flex-shrink: 0;
   flex-shrink: 0;
   border-radius: 10px;
   border: 0.5px solid #fff9c2;
@@ -158,7 +159,7 @@ export const Button = styled.div`
 `;
 
 export const ButtonText = styled.div`
-  margin-top: 5px;
+  margin-top: 9px;
   color: #000;
   text-align: center;
   font-family: "Gothic A1";
@@ -166,4 +167,64 @@ export const ButtonText = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+`;
+
+//메뉴바 스타일
+export const Backdrop = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 393px;
+  height: 852px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  transform: translate(-50%, -50%);
+`;
+
+export const DropdownMenu = styled.div`
+  position: absolute;
+  top: 80px;
+  left: 80%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 314px;
+  border-radius: 50px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 8px #544c4c;
+  padding: 20px;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  #mypage {
+    margin-top: 15px;
+    margin-right: 7px;
+  }
+  #myreview {
+    margin-top: 107px;
+    margin-right: 7px;
+  }
+  #mainpage {
+    margin-top: 200px;
+    margin-right: 7px;
+  }
+  #logout {
+    margin-top: 2px;
+    margin-right: 2px;
+  }
+`;
+
+export const DropdownItem = styled.button`
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  width: 100%;
+  text-align: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
 `;

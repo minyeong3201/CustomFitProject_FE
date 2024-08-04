@@ -73,27 +73,30 @@ export const Name = styled.div`
 export const Kit = styled.div`
   position: absolute;
   top: 200px;
-  left: 50px;
+  left: 90px;
   color: #000;
   font-family: "Gothic A1";
   font-size: 20px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 150%; /* 30px */
   letter-spacing: -0.22px;
 `;
 
 export const Check = styled.div`
   position: absolute;
-  top: 
-  left: 
+  width: 300px;
+  margin-top: 5px;
+  justify-content: center;
+  text-align: center;
+  item-align: center;
+  margin-left: -40px;
   color: #000;
   font-family: "Gothic A1";
   font-size: 13px;
   font-style: normal;
-  font-weight: 300;
-  line-height: 150%; /* 19.5px */
-  letter-spacing: -0.143px;
+  font-weight: 500;
+  letter-spacing: -0.0005px;
 `;
 
 

@@ -4,10 +4,35 @@ import * as i0 from "../style/styledchangeinfo";
 
 const Changeinfo = () => {
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedBox, setSelectedBox] = useState(null); // 클릭된 박스의 인덱스를 관리
 
-  const goMain = () => {
+  const goMain0 = () => {
+    navigate(`/Main0`);
+  };
+
+  const goMain2 = () => {
     navigate(`/`);
+  };
+
+  const goMypage = () => {
+    navigate(`/Mypage`);
+  };
+
+  const goReview = () => {
+    navigate(`/Review`);
+  };
+
+  const goLogin = () => {
+    navigate(`/Login`);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
 
   // 클릭된 박스의 상태를 업데이트하는 함수
@@ -20,7 +45,7 @@ const Changeinfo = () => {
         navigate('/changeinfo1'); 
         break;
       case 1:
-        navigate('/changeinfo1'); 
+        navigate('/changeinfo3'); 
         break;
       case 2:
         navigate('/changeinfo4'); 
@@ -53,7 +78,7 @@ const Changeinfo = () => {
           src={`${process.env.PUBLIC_URL}/logo/ylogo.svg`}
           alt="logo"
           width="40px"
-          onClick={goMain}
+          onClick={goMain2}
         />
         <img
           id="alarm"
@@ -77,12 +102,75 @@ const Changeinfo = () => {
             left: "8px",
             cursor: "pointer",
           }}
-          onClick={() => navigate(-1)}
+          onClick={toggleMenu}
         />
         <i0.Border>
           <div></div>
         </i0.Border>
       </i0.Header>
+
+      {isMenuOpen && (
+        <>
+          <i0.Backdrop onClick={closeMenu} />
+          <i0.DropdownMenu>
+            <i0.DropdownItem onClick={goMypage}>
+              <img
+                id="mypage"
+                src={`${process.env.PUBLIC_URL}/logo/mypage.svg`}
+                alt="mypage"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </i0.DropdownItem>
+            <i0.DropdownItem onClick={goReview}>
+              <img
+                id="myreview"
+                src={`${process.env.PUBLIC_URL}/logo/myreview.svg`}
+                alt="myreview"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </i0.DropdownItem>
+            <i0.DropdownItem onClick={goMain0}>
+              <img
+                id="mainpage"
+                src={`${process.env.PUBLIC_URL}/logo/mainpage.svg`}
+                alt="mainpage"
+                style={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </i0.DropdownItem>
+            <i0.DropdownItem onClick={goLogin}>
+              <img
+                id="logout"
+                src={`${process.env.PUBLIC_URL}/logo/logout.svg`}
+                alt="logout"
+                style={{
+                  position: "absolute",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={toggleMenu}
+              />
+            </i0.DropdownItem>
+          </i0.DropdownMenu>
+        </>
+      )}
 
       <i0.Ybox>
         <i0.Top>

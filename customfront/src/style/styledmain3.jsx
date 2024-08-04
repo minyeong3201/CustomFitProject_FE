@@ -15,7 +15,7 @@ export const Header = styled.div`
   background: #fff;
   width: 393px;
   height: 50px;
-  z-index: 2;
+  z-index: 20;
   #back {
     cursor: pointer;
   }
@@ -87,7 +87,7 @@ export const Ybox = styled.div`
   align-items: flex-start;
   text-align: flex-start;
   width: 393px;
-  height: 700px;
+  height: 630px;
   flex-shrink: 0;
   background: #fffde8;
 `;
@@ -188,9 +188,9 @@ export const Sbox = styled.div`
   align-items: center;
   text-align: center;
   width: 393px;
-  height: 700px;
+  height: 450px;
   flex-shrink: 0;
-  background: pink;
+  background: #fff;
   /*background: linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 37%, #FFF 69%, #FFF 100%);*/
 `;
 
@@ -210,7 +210,7 @@ export const Otext = styled.div`
   width: 350px;
   height: 40px;
   flex-shrink: 0;
-  margin-top: 50px;
+  margin-top: 0px;
   margin-left: 20px;
 `;
 
@@ -308,7 +308,7 @@ export const Star = styled.div`
 
 export const Button = styled.div`
   margin-top: 50px;
-  margin-left: 30px;
+  margin-left: 10px;
   width: 298px;
   height: 39px;
   flex-shrink: 0;
@@ -327,4 +327,63 @@ export const ButtonText = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+`;
+
+export const Backdrop = styled.div`
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  width: 393px;
+  height: 1800px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  transform: translate(-50%, -50%);
+`;
+
+export const DropdownMenu = styled.div`
+  position: absolute;
+  top: 80px;
+  left: 80%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 314px;
+  border-radius: 50px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 8px #544c4c;
+  padding: 20px;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  #mypage {
+    margin-top: 15px;
+    margin-right: 7px;
+  }
+  #myreview {
+    margin-top: 107px;
+    margin-right: 7px;
+  }
+  #mainpage {
+    margin-top: 200px;
+    margin-right: 7px;
+  }
+  #logout {
+    margin-top: 2px;
+    margin-right: 2px;
+  }
+`;
+
+export const DropdownItem = styled.button`
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  width: 100%;
+  text-align: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
 `;

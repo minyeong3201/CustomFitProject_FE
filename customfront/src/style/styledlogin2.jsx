@@ -102,29 +102,7 @@ export const LoginBox = styled.div`
     font-weight: 500;
     line-height: normal;
   }
-  width: 150px;
-  height: 39px;
-  position: absolute;
-  left: 205px;
-  top: 700px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  border: 1.5px solid #000;
-  background: #a7faf0;
-`;
-
-export const MembershipBox = styled.div`
-  #MembershipText {
-    color: #000;
-    margin-top: 5px;
-    text-align: center;
-    font-family: "Gothic A1";
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-  }
-  width: 150px;
+  width: 335px;
   height: 39px;
   position: absolute;
   left: 30px;
@@ -132,5 +110,5 @@ export const MembershipBox = styled.div`
   flex-shrink: 0;
   border-radius: 10px;
   border: 1.5px solid #000;
-  background: #fff;
+  background: #a7faf0;
 `;

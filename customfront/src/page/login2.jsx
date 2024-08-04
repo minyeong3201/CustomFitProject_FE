@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as h from "../style/styledlogin";
+import * as l2 from "../style/styledlogin2";
 
-const Login = () => {
+const Login2 = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [csrfToken, setCsrfToken] = useState("");
@@ -40,7 +40,7 @@ const Login = () => {
       localStorage.setItem('token', token);
 
       // 로그인 성공 후 네비게이션 처리
-      navigate(`/main0`);
+      navigate(`/info1`);
     } catch (error) {
       console.error(error);
       alert("로그인 실패: 사용자 이름이나 비밀번호를 확인하세요.");
@@ -72,15 +72,12 @@ const Login = () => {
     );
   };
 
-  const goMembership = () => {
-    navigate(`/membership`);
-  };
 
   return (
-    <h.Container>
-      <h.Title>
-        <h.Box></h.Box>
-      </h.Title>
+    <l2.Container>
+      <l2.Title>
+        <l2.Box></l2.Box>
+      </l2.Title>
       <img
         id="logintitle"
         src={`${process.env.PUBLIC_URL}/logo/logintitle.svg`}
@@ -95,7 +92,7 @@ const Login = () => {
       />
       <LottiePlayer />
 
-      <h.InsertA>
+      <l2.InsertA>
         <input
           type="text"
           id="Id"
@@ -104,8 +101,8 @@ const Login = () => {
           onChange={(e) => setUsername(e.target.value)}
           style={{ outline: "none" }}
         />
-      </h.InsertA>
-      <h.InsertB>
+      </l2.InsertA>
+      <l2.InsertB>
         <input
           type="password"
           id="Pw"
@@ -114,21 +111,15 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           style={{ outline: "none" }}
         />
-      </h.InsertB>
+      </l2.InsertB>
 
-      <h.LoginBox onClick={handleLogin}>
+      <l2.LoginBox onClick={handleLogin}>
         <div id="LoginText" style={{ cursor: "pointer" }}>
           로그인
         </div>
-      </h.LoginBox>
-
-      <h.MembershipBox onClick={goMembership}>
-        <div id="MembershipText" style={{ cursor: "pointer" }}>
-          회원가입
-        </div>
-      </h.MembershipBox>
-    </h.Container>
+      </l2.LoginBox>
+    </l2.Container>
   );
 };
 
-export default Login;
+export default Login2;
