@@ -112,7 +112,6 @@ const Review = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  
 
   const goReviewcheck1 = () => {
     if (selectedProduct && reviewText && selectedImage) {
@@ -262,7 +261,12 @@ const Review = () => {
         </r.Box>
 
         <r.Under>
-          {userInfo.first_name}님! <br />
+          {userInfo ? (
+            `${userInfo.first_name}님!`
+          ) : (
+            "Loading user information..."
+          )}
+          <br />
           {selectedProduct
             ? `[${selectedProduct.name}]은 어떠셨어요?`
             : "[제품명]은 어떠셨어요?"}

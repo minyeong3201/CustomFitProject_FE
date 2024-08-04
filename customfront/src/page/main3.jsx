@@ -14,6 +14,42 @@ const Main3 = () => {
   const [userError, setUserError] = useState(null); // 사용자 정보 에러 상태 추가
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const goMain0 = () => {
+    navigate(`/Main0`);
+  };
+
+  const goAlarm1 = () => {
+    navigate(`/Alarm1`);
+  };
+
+  const goMypage = () => {
+    navigate(`/Mypage`);
+  };
+
+  const goReview = () => {
+    navigate(`/Review`);
+  };
+
+  const goLogin = () => {
+    navigate(`/Login`);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  const goMain2 = () => {
+    navigate(`/Main2`);
+  };
+
+  const handleStarClick = (value) => {
+    setRating(value);
+  };
+
   useEffect(() => {
     // 로컬 스토리지에서 first_name 가져오기
     const storedFirstName = localStorage.getItem("first_name");
@@ -45,46 +81,6 @@ const Main3 = () => {
     }
   };
 
-  useEffect(() => {
-    fetchUserInfo(); // 컴포넌트가 마운트될 때 사용자 정보를 가져옵니다.
-  }, []);
-
-  const goMain0 = () => {
-    navigate(`/Main0`);
-  };
-
-  const goAlarm1 = () => {
-    navigate(`/Alarm1`);
-  };
-
-  const goMypage = () => {
-    navigate(`/Mypage`);
-  };
-
-  const goReview = () => {
-    navigate(`/Review`);
-  };
-
-  const goLogin = () => {
-    navigate(`/Login`);
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
-  const goMain2 = () => {
-    navigate(`/`);
-  };
-
-  const handleStarClick = (value) => {
-    setRating(value);
-  };
-
   // 질병 이름 매핑
   const diseaseMapping = {
     diabetes: "당뇨",
@@ -110,6 +106,11 @@ const Main3 = () => {
   const getStextLabel = (diseaseKey) => {
     return diseaseStextMapping[diseaseKey] || "정보";
   };
+
+  useEffect(() => {
+    fetchUserInfo(); // 컴포넌트가 마운트될 때 사용자 정보를 가져옵니다.
+  }, []);
+
 
   if (userError) { // 사용자 정보 에러가 있는 경우
     return <div>Error: {userError}</div>;
